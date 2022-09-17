@@ -1,0 +1,100 @@
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
+
+class Ui_Form2(object):
+  
+    def setupUi(self, Form):
+        if not Form.objectName():
+            Form.setObjectName(u"Form")
+        Form.setEnabled(True)
+        Form.resize(660, 300)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
+        Form.setSizePolicy(sizePolicy)
+        Form.setMinimumSize(660, 300)
+        Form.setMaximumSize(660, 300)
+        Form.setMouseTracking(False)
+        Form.setTabletTracking(False)
+        Form.setAcceptDrops(False)
+        Form.setAutoFillBackground(True)
+        Form.setStyleSheet(u"")
+        self.pushButton_3 = QPushButton(Form)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setGeometry(QRect(10, 270, 81, 21))
+        self.pushButton_4 = QPushButton(Form)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setGeometry(QRect(570, 270, 75, 23))
+        self.widget = QWidget(Form)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(10, 10, 321, 121))
+        self.widget.setStyleSheet(u".QWidget{border: 1px solid rgb(159, 159, 159);}\n"
+"\n"
+"\n"
+"")
+        self.lineEdit_4 = QLineEdit(self.widget)
+        self.lineEdit_4.setObjectName(u"lineEdit_4")
+        self.lineEdit_4.setGeometry(QRect(10, 80, 301, 21))
+        self.lineEdit_4.setEnabled(False)
+        self.pushButton_5 = QPushButton(self.widget)
+        self.pushButton_5.setObjectName(u"pushButton_5")
+        self.pushButton_5.setGeometry(QRect(110, 30, 101, 31))
+        self.widget_2 = QWidget(Form)
+        self.widget_2.setObjectName(u"widget_2")
+        self.widget_2.setGeometry(QRect(340, 10, 311, 121))
+        self.widget_2.setStyleSheet(u".QWidget{border: 1px solid rgb(159, 159, 159);}")
+        self.label_2 = QLabel(self.widget_2)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(0, 30, 311, 21))
+        self.label_2.setAlignment(Qt.AlignCenter)
+        self.lineEdit = QLineEdit(self.widget_2)
+        self.lineEdit.setObjectName(u"lineEdit")
+        self.lineEdit.setGeometry(QRect(110, 80, 113, 20))
+        self.label_6 = QLabel(self.widget_2)
+        self.label_6.setObjectName(u"label_6")
+        self.label_6.setGeometry(QRect(90, 80, 47, 13))
+        self.widget_3 = QWidget(Form)
+        self.widget_3.setObjectName(u"widget_3")
+        self.widget_3.setGeometry(QRect(10, 140, 641, 121))
+        self.widget_3.setStyleSheet(u".QWidget{border: 1px solid rgb(159, 159, 159);}")
+        self.lineEdit_3 = QLineEdit(self.widget_3)
+        self.lineEdit_3.setObjectName(u"lineEdit_3")
+        self.lineEdit_3.setEnabled(True)
+        self.lineEdit_3.setGeometry(QRect(270, 80, 113, 20))
+        self.label_3 = QLabel(self.widget_3)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(0, 20, 641, 16))
+        self.label_3.setAlignment(Qt.AlignCenter)
+        self.label_5 = QLabel(self.widget_3)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setEnabled(True)
+        self.label_5.setGeometry(QRect(250, 80, 47, 13))
+        self.label_4 = QLabel(self.widget_3)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setEnabled(True)
+        self.label_4.setGeometry(QRect(250, 50, 47, 13))
+        self.lineEdit_2 = QLineEdit(self.widget_3)
+        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.lineEdit_2.setEnabled(True)
+        self.lineEdit_2.setGeometry(QRect(270, 50, 113, 20))
+
+        self.retranslateUi(Form)
+
+        QMetaObject.connectSlotsByName(Form)
+        
+    # setupUi
+
+    def retranslateUi(self, Form):
+        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+        self.pushButton_3.setText(QCoreApplication.translate("Form", u"Volver al inicio", None))
+        self.pushButton_4.setText(QCoreApplication.translate("Form", u"Siguiente", None))
+        self.pushButton_5.setText(QCoreApplication.translate("Form", u"Buscar DataSet", None))
+        self.label_2.setText(QCoreApplication.translate("Form", u"Ingrese el numero de k que desea utilizar.", None))
+        self.label_6.setText(QCoreApplication.translate("Form", u"K=", None))
+        self.label_3.setText(QCoreApplication.translate("Form", u"Ingresar las coordenadas del punto a evaluar", None))
+        self.label_5.setText(QCoreApplication.translate("Form", u"Y=", None))
+        self.label_4.setText(QCoreApplication.translate("Form", u"X=", None))
+    # retranslateUi
