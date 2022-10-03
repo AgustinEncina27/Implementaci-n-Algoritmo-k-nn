@@ -32,22 +32,17 @@ class Algoritmo:
                     self.clase.append(float(row[2]))
         
     def obtenerKOptimo(self):
-        contador=1
         listaK=[]
         for a in range(5):
             listaK.append(0)
         print(listaK)
+        print(self.clase)
         for i in range(1,5):
             self.k=i
             for fila in range(5):
-                resultadoClase = self.obtenerClaseNuevoPunto(fila,contador)
-                print(resultadoClase)
-                if(resultadoClase[0]==self.clase[fila]):
+                resultadoClase = self.obtenerClaseNuevoPunto(fila)
+                if(resultadoClase[0][0]==self.clase[fila]):
                     listaK[i] = listaK[i] + 1
-                contador=contador+1
-                if(contador==6):
-                    break
-            contador=1
         print(listaK)
     
     def calcularMatrizDistancias(self):
@@ -55,10 +50,10 @@ class Algoritmo:
         for fila in range(self.contador-1):       
             for columna in range(fila,self.contador-1):
                 if(fila==columna):
-                    self.matrizDistancia[fila][columna]=0
+                    self.matrizDistancia[fila][columna]=[0]
                 else:
                     self.matrizDistancia[fila][columna]=[math.sqrt(((self.x[fila]-self.x[columna])**2+(self.y[fila]-self.y[columna])**2)),self.x[columna],self.y[columna],self.clase[columna]]
-                    self.matrizDistancia[columna][fila]=-1
+                    self.matrizDistancia[columna][fila]=[self.matrizDistancia[fila][columna][0],self.x[fila],self.y[fila],self.clase[fila]]
                     #self.matrizDistancia[fila][columna]
         for fila in self.matrizDistancia:
             for valor in fila:
@@ -66,16 +61,16 @@ class Algoritmo:
             print()
         print("------------------------------------------------")
         contadorAuxiliar=1
-        columnaAOrdenar=[]
-        for columna in range(self.contador-1):
-            for aux in range(contadorAuxiliar,self.contador-1):
-                columnaAOrdenar.append(self.matrizDistancia[columna][aux])
-            columnaOrdenada = sorted(columnaAOrdenar)
-            for auxiliarOrdenar in range(len(columnaOrdenada)):
-                self.matrizDistancia[columna][auxiliarOrdenar+contadorAuxiliar] = columnaOrdenada[auxiliarOrdenar]
-                self.matrizDistancia[auxiliarOrdenar+contadorAuxiliar][columna]= -1
+        filaAOrdenar=[]
+        for fila in range(self.contador-1):
+            for aux in range(self.contador-1):
+                filaAOrdenar.append(self.matrizDistancia[fila][aux])
+            filaOrdenada = sorted(filaAOrdenar, key=lambda x:x[0])
+            for auxiliarOrdenar in range(len(filaOrdenada)):
+                self.matrizDistancia[fila] = filaOrdenada
+                #self.matrizDistancia[auxiliarOrdenar+contadorAuxiliar][columna]= -1
                 #self.matrizDistancia[columna][auxiliarOrdenar+contadorAuxiliar]
-            columnaAOrdenar=[]
+            filaAOrdenar=[]
             contadorAuxiliar=contadorAuxiliar+1
         for fila in self.matrizDistancia:
             for valor in fila:
@@ -110,21 +105,16 @@ class Algoritmo:
         print(self.distanciasOrdenadas)
 
     #Define de que clase es el nuevo punto ingresado
-    def obtenerClaseNuevoPunto(self,fila,contador):
+    def obtenerClaseNuevoPunto(self,fila):
         vecinos={}
-        resultado = self.k+contador
-        print(resultado)
-        for cantidadK in range(contador,resultado):
-            print(self.matrizDistancia[fila][cantidadK][3])
-            if(self.matrizDistancia[fila][cantidadK][3] in vecinos):
-                vecinos[self.matrizDistancia[fila][cantidadK][3]]=vecinos[self.matrizDistancia[fila][cantidadK][3]]+1
+        for cantidadK in range(self.k):
+            if(self.matrizDistancia[fila][cantidadK+1][3] in vecinos):
+                vecinos[self.matrizDistancia[fila][cantidadK+1][3]]=vecinos[self.matrizDistancia[fila][cantidadK+1][3]]+1
             else:
-                vecinos[self.matrizDistancia[fila][cantidadK][3]]=1
-        print(vecinos)
+                vecinos[self.matrizDistancia[fila][cantidadK+1][3]]=1
         vecino = sorted(vecinos.items(), key=operator.itemgetter(1))
-        #vecinoReversed = vecino.reverse()
-        print("Salio de la funcion")
-        return vecino
+        vecinoOrdenado = list(reversed(vecino))
+        return vecinoOrdenado
 
     def obtenerClaseNuevoPuntoPonderado(self):
         vecinos={}
