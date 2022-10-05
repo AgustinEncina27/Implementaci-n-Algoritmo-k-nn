@@ -1,59 +1,50 @@
 import pandas as pd
 import numpy as np
 import operator
+import matplotlib as plt
 
-# loading data file into the program. give the location of your csv file
-dataset = pd.read_csv("E:/input/iris.csv")
-print(dataset.head()) # prints first five tuples of your data.
 
-# making function for calculating euclidean distance
-def E_Distance(x1, x2, length):
-    distance = 0
+# cargamos el DataSet
+dataframe = pd.read_csv(r"dataset3.csv", sep=',')
+
+# Calculamos la distancia Euclidiana
+def Distancia_Euclidiana(x1, x2, length):
+    distancia = 0
     for x in range(length):
-        distance += np.square(x1[x] - x2[x])
-    return np.sqrt(distance)
+        distancia += np.square(x1[x] - x2[x])
+    return np.sqrt(distancia)
 
-# making function for defining K-NN model
-
+# Algoritmo KN-N
 def knn(trainingSet, testInstance, k):
-    distances = {}
+    distancias = {}
     length = testInstance.shape[1]
     for x in range(len(trainingSet)):
-        dist = E_Distance(testInstance, trainingSet.iloc[x], length)
-        distances[x] = dist[0]
-    sortdist = sorted(distances.items(), key=operator.itemgetter(1))
-    neighbors = []
+        dist = Distancia_Euclidiana(testInstance, trainingSet.iloc[x], length)
+        distancias[x] = dist[0]
+    sortdist = sorted(distancias.items(), key=operator.itemgetter(1))
+    vecinos = []
     for x in range(k):
-        neighbors.append(sortdist[x][0])
-    Count = {}  # to get most frequent class of rows
-    for x in range(len(neighbors)):
-        response = trainingSet.iloc[neighbors[x]][-1]
+        vecinos.append(sortdist[x][0])
+    Count = {}  # aquie obtenemos la clase de fila mas frecuente
+    for x in range(len(vecinos)):
+        response = trainingSet.iloc[vecinos[x]][-1]
         if response in Count:
             Count[response] += 1
         else:
             Count[response] = 1
     sortcount = sorted(Count.items(), key=operator.itemgetter(1), reverse=True)
-    return (sortcount[0][0], neighbors)
+    return (sortcount[0][0], vecinos)
 
-# making test data set
-testSet = [[6.8, 3.4, 4.8, 2.4]]
+# testamos un conjunto de datos
+testSet = [[12.83113937, 13.06713831]]
 test = pd.DataFrame(testSet)
 
-# assigning different values to k
-k = 1
-k1 = 3
-k2 = 11
+# asiganmos distintintos valores de K
+k = 3
 
-# supplying test data to the model
-result, neigh = knn(dataset, test, k)
-result1, neigh1 = knn(dataset, test, k1)
-result2, neigh2 = knn(dataset, test, k2)
+# Le mostramos al KKN algunos conjuntos de datos probaddos
+result, neigh = knn(dataframe, test, k)
 
-# printing output prediction
-
+# mostramos la sallida
 print(result)
 print(neigh)
-print(result1)
-print(neigh1)
-print(result2)
-print(neigh2)
