@@ -33,17 +33,30 @@ class Algoritmo:
         
     def obtenerKOptimo(self):
         listaK=[]
-        for a in range(5):
+        for a in range(600):
             listaK.append(0)
-        print(listaK)
-        print(self.clase)
-        for i in range(1,5):
+        bandera=False
+        cantidadClases=[0.0,1.0,2.0]
+        for i in range(1,600):
             self.k=i
-            for fila in range(5):
+            for fila in range(599):
                 resultadoClase = self.obtenerClaseNuevoPunto(fila)
-                if(resultadoClase[0][0]==self.clase[fila]):
-                    listaK[i] = listaK[i] + 1
+                if(len(resultadoClase)>1):
+                    if(resultadoClase[0][1]==resultadoClase[1][1]):
+                        bandera=False
+                    else:
+                        bandera=True
+                else:
+                    bandera=True
+                if(resultadoClase[0][0]==self.clase[fila] and bandera):
+                    listaK[i-1] = listaK[i-1] + 1
+                bandera=False
+            print("Contando")
+            print(i)
         print(listaK)
+        max_value = max(listaK)
+        print('Maximum value:', max_value, "At index:", listaK.index(max_value))
+
     
     def calcularMatrizDistancias(self):
         self.matrizDistancia =  [ [ None for y in range(self.contador-1) ] for x in range( self.contador-1) ]   
@@ -55,10 +68,10 @@ class Algoritmo:
                     self.matrizDistancia[fila][columna]=[math.sqrt(((self.x[fila]-self.x[columna])**2+(self.y[fila]-self.y[columna])**2)),self.x[columna],self.y[columna],self.clase[columna]]
                     self.matrizDistancia[columna][fila]=[self.matrizDistancia[fila][columna][0],self.x[fila],self.y[fila],self.clase[fila]]
                     #self.matrizDistancia[fila][columna]
-        for fila in self.matrizDistancia:
-            for valor in fila:
-                print("\t", valor, end=" ")
-            print()
+        #for fila in self.matrizDistancia:
+        #    for valor in fila:
+        #        print("\t", valor, end=" ")
+        #print()
         print("------------------------------------------------")
         contadorAuxiliar=1
         filaAOrdenar=[]
@@ -72,10 +85,11 @@ class Algoritmo:
                 #self.matrizDistancia[columna][auxiliarOrdenar+contadorAuxiliar]
             filaAOrdenar=[]
             contadorAuxiliar=contadorAuxiliar+1
-        for fila in self.matrizDistancia:
-            for valor in fila:
-                print("\t", valor, end=" ")
-            print()
+        #for fila in self.matrizDistancia:
+        #    for valor in fila:
+        #        print("\t", valor, end=" ")
+        #    print()
+        print("++++++++++++++++++++++++++++++++++++++++++++")
 
     #Define el mapa de colores para el grafico, habria que hacerlo mas general porque ahora esta hecho para 3 clases
     def definirMapaDeColores(self):
@@ -107,27 +121,35 @@ class Algoritmo:
     #Define de que clase es el nuevo punto ingresado
     def obtenerClaseNuevoPunto(self,fila):
         vecinos={}
+        #for a in cantidadClases:
+            #vecinos[a]=0
         for cantidadK in range(self.k):
-            if(self.matrizDistancia[fila][cantidadK+1][3] in vecinos):
-                vecinos[self.matrizDistancia[fila][cantidadK+1][3]]=vecinos[self.matrizDistancia[fila][cantidadK+1][3]]+1
+            auxiliar=self.matrizDistancia[fila][cantidadK+1][3]
+            #for clave in vecinos.keys():
+                #if(self.matrizDistancia[fila][cantidadK+1][3]==clave):
+                    #vecinos[self.matrizDistancia[fila][cantidadK+1][3]]=vecinos[self.matrizDistancia[fila][cantidadK+1][3]]+1
+            if(auxiliar in vecinos):
+                vecinos[auxiliar]=vecinos[auxiliar]+1
             else:
-                vecinos[self.matrizDistancia[fila][cantidadK+1][3]]=1
-        vecino = sorted(vecinos.items(), key=operator.itemgetter(1))
-        vecinoOrdenado = list(reversed(vecino))
+                vecinos[auxiliar]=1
+        vecinoOrdenado = sorted(vecinos.items(), key=operator.itemgetter(1),reverse=True)
         return vecinoOrdenado
 
-    def obtenerClaseNuevoPuntoPonderado(self):
+    def obtenerClaseNuevoPuntoPonderado(self,fila):
         vecinos={}
+        #for a in cantidadClases:
+            #vecinos[a]=0
         for cantidadK in range(self.k):
-            if(self.distanciasOrdenadas[cantidadK][3] in vecinos):
-                vecinos[self.distanciasOrdenadas[cantidadK][3]]=vecinos[self.distanciasOrdenadas[cantidadK][3]]+(1/math.sqrt(self.distanciasOrdenadas[cantidadK][0]))
+            #for clave in vecinos.keys():
+                #if(self.matrizDistancia[fila][cantidadK+1][3]==clave):
+                    #vecinos[self.matrizDistancia[fila][cantidadK+1][3]]=vecinos[self.matrizDistancia[fila][cantidadK+1][3]]+(1/((self.matrizDistancia[fila][cantidadK+1][0])**2))
+            auxiliar=self.matrizDistancia[fila][cantidadK+1][3]
+            if(auxiliar in vecinos):
+                vecinos[auxiliar]=vecinos[auxiliar]+(1/((self.matrizDistancia[fila][cantidadK+1][0])**2))
             else:
-                print(self.distanciasOrdenadas[cantidadK][3])
-                vecinos[self.distanciasOrdenadas[cantidadK][3]]=0
-                vecinos[self.distanciasOrdenadas[cantidadK][3]]=(1/math.sqrt(self.distanciasOrdenadas[cantidadK][0]))
-        self.vecinoPonderado = sorted(vecinos.items(), key=operator.itemgetter(1))
-        self.vecinoPonderado.reverse()
-        print(self.vecinoPonderado)
+                vecinos[auxiliar]=(1/((self.matrizDistancia[fila][cantidadK+1][0])**2))
+        vecinoOrdenadoPonderado = sorted(vecinos.items(), key=operator.itemgetter(1),reverse=True)
+        return vecinoOrdenadoPonderado
 
     #Genera el grafico
     def graficarResultado(self):
