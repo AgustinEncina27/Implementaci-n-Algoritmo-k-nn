@@ -35,31 +35,29 @@ class KOptimo:
                     else:
                         matrizDistancia[fila][columna]=math.sqrt(((self.x[fila]-self.x[columna])**2+(self.y[fila]-self.y[columna])**2))
                         matrizDistancia[columna][fila]=matrizDistancia[fila][columna]
-            print(matrizDistancia)
+            #print(matrizDistancia)
             #carga la matriz ordenada para  calcular los k
-            matrizK= [ [ None for y in range( self.contador-1) ] for x in range( self.contador-1) ]
+            matrizK= [ [ None for y in range( self.contador-1) ] for x in range( self.contador-2) ]
             for columna in range(self.contador-1):     
-                for fila in range(self.contador-1):
+                for fila in range(self.contador-2):
                     self.minimo=0
                     for cantidad in range(self.contador-1):
                         self.actual=matrizDistancia[columna][cantidad]
                         if(self.minimo==0):
-                            self.minimo= self.actual
+                            self.minimo= self.minimoAnterior
                         if(self.actual!=0): 
+                            if(self.minimo==self.minimoAnterior and self.actual!=self.minimo and self.actual>self.minimo):
+                                self.minimo=self.actual
                             if(self.actual<=self.minimo and self.actual>self.minimoAnterior):
-                                print("hola")
-                                print(columna)
-                                print(fila)
-                                print(self.minimo)
-                                print(self.actual)
                                 self.minimo=self.actual
                                 self.dato=cantidad
-                                print(self.dato)
                     self.minimoAnterior=self.minimo
                     self.minimo=0
                     matrizK[fila][columna]=self.dato
                 self.minimoAnterior=0
                 self.minimo=0
+                self.dato=0
+                self.actual=0
             print(matrizK)
 
 
