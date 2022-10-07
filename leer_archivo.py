@@ -51,7 +51,6 @@ class Algoritmo:
                 if(resultadoClase[0][0]==self.clase[fila] and bandera):
                     listaK[i-1] = listaK[i-1] + 1
                 bandera=False
-            print("Contando")
             print(i)
         print(listaK)
         max_value = max(listaK)
@@ -129,7 +128,7 @@ class Algoritmo:
                 #if(self.matrizDistancia[fila][cantidadK+1][3]==clave):
                     #vecinos[self.matrizDistancia[fila][cantidadK+1][3]]=vecinos[self.matrizDistancia[fila][cantidadK+1][3]]+1
             if(auxiliar in vecinos):
-                vecinos[auxiliar]=vecinos[auxiliar]+1
+                vecinos[auxiliar]+=1
             else:
                 vecinos[auxiliar]=1
         vecinoOrdenado = sorted(vecinos.items(), key=operator.itemgetter(1),reverse=True)
@@ -145,7 +144,7 @@ class Algoritmo:
                     #vecinos[self.matrizDistancia[fila][cantidadK+1][3]]=vecinos[self.matrizDistancia[fila][cantidadK+1][3]]+(1/((self.matrizDistancia[fila][cantidadK+1][0])**2))
             auxiliar=self.matrizDistancia[fila][cantidadK+1][3]
             if(auxiliar in vecinos):
-                vecinos[auxiliar]=vecinos[auxiliar]+(1/((self.matrizDistancia[fila][cantidadK+1][0])**2))
+                vecinos[auxiliar]+=(1/((self.matrizDistancia[fila][cantidadK+1][0])**2))
             else:
                 vecinos[auxiliar]=(1/((self.matrizDistancia[fila][cantidadK+1][0])**2))
         vecinoOrdenadoPonderado = sorted(vecinos.items(), key=operator.itemgetter(1),reverse=True)
