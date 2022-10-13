@@ -1,9 +1,11 @@
+from traceback import print_tb
 from turtle import st
 import matplotlib.pyplot as plt
 import csv
 import math
 import operator
 import numpy
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 class Algoritmo:
 
@@ -19,6 +21,7 @@ class Algoritmo:
         self.vecino=[]
         self.vecinoPonderado=[]
         self.matrizDistancia=[]
+        self.clasesCalculadas=[]
 
     #Lee el csv y guarda los datos en las listas x, y, clase
     def leerArchivo(self,nombreArchivo):
@@ -36,7 +39,6 @@ class Algoritmo:
         for a in range(600):
             listaK.append(0)
         bandera=False
-        cantidadClases=[0.0,1.0,2.0]
         for i in range(1,600):
             self.k=i
             for fila in range(599):
@@ -55,6 +57,8 @@ class Algoritmo:
         print(listaK)
         max_value = max(listaK)
         print('Maximum value:', max_value, "At index:", listaK.index(max_value))
+        print(listaK.index(max_value)+1)
+        return listaK.index(max_value)+1
 
     
     def calcularMatrizDistancias(self):
@@ -92,14 +96,25 @@ class Algoritmo:
 
     #Define el mapa de colores para el grafico, habria que hacerlo mas general porque ahora esta hecho para 3 clases
     def definirMapaDeColores(self):
+        contador=0
         for color in self.clase:
-            if(color==0):
-                self.colormap.append('r')
-            if(color==1):
-                self.colormap.append('g')
-            if(color==2):
-                self.colormap.append('b')
-    
+            if(self.clasesCalculadas[contador]==0):
+                if(color==0):
+                    self.colormap.append('r')
+                else:
+                    self.colormap.append('lightcoral')
+            if(self.clasesCalculadas[contador]==1):
+                if(color==1):
+                    self.colormap.append('g')
+                else:
+                    self.colormap.append('lightgreen')
+            if(self.clasesCalculadas[contador]==2):
+                if(color==2):
+                    self.colormap.append('b')
+                else:
+                    self.colormap.append('cyan')
+            contador+=1
+        print(self.colormap)
     #Define el atributo K
     def setK(self,k):
         self.k=k
@@ -149,23 +164,17 @@ class Algoritmo:
                 vecinos[auxiliar]=(1/((self.matrizDistancia[fila][cantidadK+1][0])**2))
         vecinoOrdenadoPonderado = sorted(vecinos.items(), key=operator.itemgetter(1),reverse=True)
         return vecinoOrdenadoPonderado
+        
 
     #Genera el grafico
     def graficarResultado(self):
-        plt.scatter(self.x, self.y, c=self.colormap)
-        colorNuevoPunto=''
-        if(self.vecino[0][0]==0):
-            colorNuevoPunto = 'red'
-        if(self.vecino[0][0]==1):
-            colorNuevoPunto = 'green'
-        if(self.vecino[0][0]==2):
-            colorNuevoPunto= 'blue'
-        plt.scatter(self.nuevoPunto[0],self.nuevoPunto[1], color=colorNuevoPunto)
-        plt.annotate("Nuevo Punto", (self.nuevoPunto[0],self.nuevoPunto[1]))
-        plt.axvline(x=0, c="black")
-        plt.axhline(y=0, c="black")
-        plt.axis('equal')
-        plt.show()
+        grafico = Canvas_grafica(self.x,self.y,self.colormap)
+        return grafico
+        #plt.scatter(self.x, self.y, c=self.colormap)
+        #plt.axvline(x=0, c="black")
+        #plt.axhline(y=0, c="black")
+        #plt.axis('equal')
+        #plt.show()
 
     def graficarResultadoPonderado(self):
         plt.scatter(self.x, self.y, c=self.colormap)
@@ -183,13 +192,25 @@ class Algoritmo:
         plt.axis('equal')
         plt.show()
     
-    def algoritmoKnn(self,nombreDelArchivo,NuevoX,NuevoY,k):
-        self.leerArchivo(nombreDelArchivo)
-        self.definirMapaDeColores()
+    def algoritmoKnn(self,k):
         self.setK(k)
-        self.definirNuevoPunto(NuevoX,NuevoY)
-        self.calcularDistancia()
-        self.obtenerClaseNuevoPunto()
+        bandera=False
+        for a in range(600):
+            resultadoClase = self.obtenerClaseNuevoPunto(a)
+            if(len(resultadoClase)>1):
+                if(resultadoClase[0][1]==resultadoClase[1][1]):
+                    bandera=False
+                else:
+                    bandera=True
+            else:
+                bandera=True
+            if(bandera):
+                self.clasesCalculadas.append(self.obtenerClaseNuevoPunto(a)[0][0])
+            else:
+                self.clasesCalculadas.append(-1)
+            bandera=False
+        print(self.clasesCalculadas)
+        self.definirMapaDeColores()
         self.graficarResultado()
 
     def algoritmoKnnPonderado(self,nombreDelArchivo,NuevoX,NuevoY,k):
@@ -207,6 +228,15 @@ class Algoritmo:
         self.obtenerKOptimo()
         self.graficarResultado()
 
-
-    
+class Canvas_grafica(FigureCanvas):
+    def __init__(self, x,y,colormap):
+        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
+            sharey=True, facecolor='white')
+        super().__init__(self.fig)
+        print(len(x),len(y),len(colormap))
+        self.ax.scatter(x, y, color=colormap)
+        self.ax.axvline(x=0, c="black")
+        self.ax.axhline(y=0, c="black")
+        self.ax.axis('equal')
+        self.fig.suptitle('Algoritmo Knn con K Optimo',size=9)
 
