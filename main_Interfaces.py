@@ -18,6 +18,8 @@ class MainWindow(QMainWindow):
         view.Analizar_Dataset.triggered.connect(self.cambiar_A_Interfaz_opcion)
     
     def cambiar_A_Interfaz_opcion(self):
+        interfaz_k=Interfaz_k()
+        widget.addWidget(interfaz_k)
         widget.setCurrentWidget(interfaz_k)
         widget.setFixedWidth(342)
         widget.setFixedHeight(172)
@@ -49,6 +51,8 @@ class Interfaz_k(QWidget):
             QtWidgets.QMessageBox.critical(self, "error", "Ingrese todos los campos por favor")
         else:   
             control.obtenerDatos(self.fname[0])
+            interfaz_grafica=Interfaz_Grafica()
+            widget.addWidget(interfaz_grafica)
             self.limpiarComponentes()
             widget.setCurrentWidget(interfaz_grafica)
             widget.setFixedWidth(841)
@@ -66,7 +70,8 @@ class Interfaz_Grafica(QWidget):
         self.size=0
         self.view.pushButton_2.clicked.connect(self.cambiar_A_Interfaz_Principal)
         self.view.pushButton.clicked.connect(self.cambiarGrafico)
-
+        self.view.mostrarK.setText(str(self.view.horizontalSlider.value()))
+        
         self.view.horizontalSlider.valueChanged.connect(self.cambiarValor)
         grafica1=Canvas_grafica()
         grafica2=Canvas_grafica()
@@ -115,11 +120,7 @@ app= QApplication(sys.argv)
 widget=QtWidgets.QStackedWidget()
 control=Controlador()
 principal = MainWindow()
-interfaz_k=Interfaz_k()
-interfaz_grafica=Interfaz_Grafica()
 widget.addWidget(principal)
-widget.addWidget(interfaz_k)
-widget.addWidget(interfaz_grafica)
 widget.setCurrentWidget(principal)
 widget.setFixedWidth(600)
 widget.setFixedHeight(320)

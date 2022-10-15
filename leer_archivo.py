@@ -169,6 +169,7 @@ class Algoritmo:
     #Genera el grafico
     def graficarResultado(self):
         grafico = Canvas_grafica(self.x,self.y,self.colormap)
+        print(type(grafico))
         return grafico
         #plt.scatter(self.x, self.y, c=self.colormap)
         #plt.axvline(x=0, c="black")
@@ -211,7 +212,7 @@ class Algoritmo:
             bandera=False
         print(self.clasesCalculadas)
         self.definirMapaDeColores()
-        self.graficarResultado()
+        return self.graficarResultado()
 
     def algoritmoKnnPonderado(self,nombreDelArchivo,NuevoX,NuevoY,k):
         self.leerArchivo(nombreDelArchivo)
