@@ -57,7 +57,6 @@ class Algoritmo:
         print(listaK)
         max_value = max(listaK)
         print('Maximum value:', max_value, "At index:", listaK.index(max_value))
-        print(listaK.index(max_value)+1)
         return listaK.index(max_value)+1
 
     
@@ -96,6 +95,7 @@ class Algoritmo:
 
     #Define el mapa de colores para el grafico, habria que hacerlo mas general porque ahora esta hecho para 3 clases
     def definirMapaDeColores(self):
+        self.colormap.clear()
         contador=0
         for color in self.clase:
             if(self.clasesCalculadas[contador]==0):
@@ -114,7 +114,8 @@ class Algoritmo:
                 else:
                     self.colormap.append('cyan')
             contador+=1
-        print(self.colormap)
+        #print(self.colormap)
+
     #Define el atributo K
     def setK(self,k):
         self.k=k
@@ -169,7 +170,6 @@ class Algoritmo:
     #Genera el grafico
     def graficarResultado(self):
         grafico = Canvas_grafica(self.x,self.y,self.colormap)
-        print(type(grafico))
         return grafico
         #plt.scatter(self.x, self.y, c=self.colormap)
         #plt.axvline(x=0, c="black")
@@ -210,31 +210,30 @@ class Algoritmo:
             else:
                 self.clasesCalculadas.append(-1)
             bandera=False
-        print(self.clasesCalculadas)
         self.definirMapaDeColores()
         return self.graficarResultado()
 
-    def algoritmoKnnPonderado(self,nombreDelArchivo,NuevoX,NuevoY,k):
-        self.leerArchivo(nombreDelArchivo)
-        self.definirMapaDeColores()
+    def algoritmoKnnPonderado(self,k):
         self.setK(k)
-        self.definirNuevoPunto(NuevoX,NuevoY)
-        self.calcularDistancia()
-        self.obtenerClaseNuevoPuntoPonderado()
-        self.graficarResultadoPonderado()
-    
-    def algoritmoKnnKoptimo(self,nombreDelArchivo):
-        self.leerArchivo(nombreDelArchivo)
+        aux = self.colormap
+        self.clasesCalculadas.clear()
+        for a in range (600):
+            self.clasesCalculadas.append(self.obtenerClaseNuevoPunto(a)[0][0])
+        print(self.colormap)
         self.definirMapaDeColores()
-        self.obtenerKOptimo()
-        self.graficarResultado()
+        print(self.colormap)
+        if(set(aux)==(self.colormap)):
+            print("Son iguales las listas")
+        else:
+            print("Son distintas")
+        return self.graficarResultado()
+    
 
 class Canvas_grafica(FigureCanvas):
     def __init__(self, x,y,colormap):
         self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
             sharey=True, facecolor='white')
         super().__init__(self.fig)
-        print(len(x),len(y),len(colormap))
         self.ax.scatter(x, y, color=colormap)
         self.ax.axvline(x=0, c="black")
         self.ax.axhline(y=0, c="black")

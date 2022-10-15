@@ -73,9 +73,9 @@ class Interfaz_Grafica(QWidget):
         self.view.mostrarK.setText(str(self.view.horizontalSlider.value()))
         
         self.view.horizontalSlider.valueChanged.connect(self.cambiarValor)
-        grafica1=Canvas_grafica()
+        grafica1=control.mostrarResultadoAlgoritmo()
         grafica2=Canvas_grafica()
-        grafica3=Canvas_grafica()
+        grafica3=control.mostrarResultadoAlgoritmoPonderado()
         grafica4=Canvas_grafica()
 
 

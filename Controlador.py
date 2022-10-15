@@ -6,9 +6,12 @@ class Controlador():
         self.k=0
         self.coordenadaX=0
         self.coordenadaY=0
+        self.algoritmo=None
 
     def obtenerDatos(self,direccion):
-        self.direccion=direccion
+        self.algoritmo=Algoritmo()
+        self.algoritmo.leerArchivo(direccion)
+        self.algoritmo.calcularMatrizDistancias()
     
     def obtenerK(self,k):
         self.k=k
@@ -20,8 +23,7 @@ class Controlador():
         self.coordenadaY=0
     
     def mostrarResultadoAlgoritmo(self):
-        print("hola")
-        algoritmo=Algoritmo()
-        algoritmo.leerArchivo("dataset1.csv")
-        algoritmo.calcularMatrizDistancias()
-        return algoritmo.algoritmoKnn(33)
+        return self.algoritmo.algoritmoKnn(33)
+    
+    def mostrarResultadoAlgoritmoPonderado(self):
+        return self.algoritmo.algoritmoKnnPonderado(33)
