@@ -16,12 +16,11 @@ class Algoritmo:
         self.contador=0
         self.colormap=[]
         self.k=0
-        self.nuevoPunto=[]
-        self.distanciasOrdenadas=[]
-        self.vecino=[]
-        self.vecinoPonderado=[]
         self.matrizDistancia=[]
         self.clasesCalculadas=[]
+        self.listaK=[]
+        self.listaKPonderado=[]
+        self.grafico=None
 
     #Lee el csv y guarda los datos en las listas x, y, clase
     def leerArchivo(self,nombreArchivo):
@@ -35,9 +34,8 @@ class Algoritmo:
                     self.clase.append(float(row[2]))
         
     def obtenerKOptimo(self):
-        listaK=[]
         for a in range(600):
-            listaK.append(0)
+            self.listaK.append(0)
         bandera=False
         for i in range(1,600):
             self.k=i
@@ -51,13 +49,37 @@ class Algoritmo:
                 else:
                     bandera=True
                 if(resultadoClase[0][0]==self.clase[fila] and bandera):
-                    listaK[i-1] = listaK[i-1] + 1
+                    self.listaK[i-1] = self.listaK[i-1] + 1
                 bandera=False
             print(i)
-        print(listaK)
-        max_value = max(listaK)
-        print('Maximum value:', max_value, "At index:", listaK.index(max_value))
-        return listaK.index(max_value)+1
+        print(self.listaK)
+        max_value = max(self.listaK)
+        print('Maximum value:', max_value, "At index:", self.listaK.index(max_value))
+        return self.listaK.index(max_value)+1
+
+    def obtenerKOptimoKnnPonderado(self):
+        for a in range(600):
+            self.listaKPonderado.append(0)
+        bandera=False
+        for i in range(1,600):
+            self.k=i
+            for fila in range(599):
+                resultadoClase = self.obtenerClaseNuevoPuntoPonderado(fila)
+                if(len(resultadoClase)>1):
+                    if(resultadoClase[0][1]==resultadoClase[1][1]):
+                        bandera=False
+                    else:
+                        bandera=True
+                else:
+                    bandera=True
+                if(resultadoClase[0][0]==self.clase[fila] and bandera):
+                    self.listaKPonderado[i-1] = self.listaKPonderado[i-1] + 1
+                bandera=False
+            print(i)
+        print(self.listaKPonderado)
+        max_value = max(self.listaKPonderado)
+        print('Maximum value:', max_value, "At index:", self.listaKPonderado.index(max_value))
+        return self.listaKPonderado.index(max_value)+1
 
     
     def calcularMatrizDistancias(self):
@@ -98,18 +120,18 @@ class Algoritmo:
         self.colormap.clear()
         contador=0
         for color in self.clase:
-            if(self.clasesCalculadas[contador]==0):
-                if(color==0):
+            if(color==0):
+                if(self.clasesCalculadas[contador]==0):
                     self.colormap.append('r')
                 else:
                     self.colormap.append('lightcoral')
-            if(self.clasesCalculadas[contador]==1):
-                if(color==1):
+            if(color==1):
+                if(self.clasesCalculadas[contador]==1):
                     self.colormap.append('g')
                 else:
                     self.colormap.append('lightgreen')
-            if(self.clasesCalculadas[contador]==2):
-                if(color==2):
+            if(color==2):
+                if(self.clasesCalculadas[contador]==2):
                     self.colormap.append('b')
                 else:
                     self.colormap.append('cyan')
@@ -119,19 +141,6 @@ class Algoritmo:
     #Define el atributo K
     def setK(self,k):
         self.k=k
-
-    #Define el punto que se va a analizar
-    def definirNuevoPunto(self,xNuevo,yNuevo):
-        self.nuevoPunto=[xNuevo,yNuevo]
-
-    #Calcula la distancia del punto nuevo contra todos los puntos del dataset
-    def calcularDistancia(self):
-        distancia=[]
-        for punto in range(600):
-            distanciaPunto = math.sqrt((self.nuevoPunto[0]-self.x[punto])**2+(self.nuevoPunto[1]-self.y[punto])**2)
-            distancia.append([distanciaPunto,self.x[punto],self.y[punto],self.clase[punto]])
-        self.distanciasOrdenadas = sorted(distancia, key=lambda x:x[0])
-        print(self.distanciasOrdenadas)
 
     #Define de que clase es el nuevo punto ingresado
     def obtenerClaseNuevoPunto(self,fila):
@@ -165,33 +174,11 @@ class Algoritmo:
                 vecinos[auxiliar]=(1/((self.matrizDistancia[fila][cantidadK+1][0])**2))
         vecinoOrdenadoPonderado = sorted(vecinos.items(), key=operator.itemgetter(1),reverse=True)
         return vecinoOrdenadoPonderado
-        
 
     #Genera el grafico
     def graficarResultado(self):
-        grafico = Canvas_grafica(self.x,self.y,self.colormap)
-        return grafico
-        #plt.scatter(self.x, self.y, c=self.colormap)
-        #plt.axvline(x=0, c="black")
-        #plt.axhline(y=0, c="black")
-        #plt.axis('equal')
-        #plt.show()
-
-    def graficarResultadoPonderado(self):
-        plt.scatter(self.x, self.y, c=self.colormap)
-        colorNuevoPunto=''
-        if(self.vecinoPonderado[0][0]==0):
-            colorNuevoPunto = 'red'
-        if(self.vecinoPonderado[0][0]==1):
-            colorNuevoPunto = 'green'
-        if(self.vecinoPonderado[0][0]==2):
-            colorNuevoPunto= 'blue'
-        plt.scatter(self.nuevoPunto[0],self.nuevoPunto[1], color=colorNuevoPunto)
-        plt.annotate("Nuevo Punto", (self.nuevoPunto[0],self.nuevoPunto[1]))
-        plt.axvline(x=0, c="black")
-        plt.axhline(y=0, c="black")
-        plt.axis('equal')
-        plt.show()
+        #self.grafico = Canvas_grafica(self.x,self.y,self.colormap)
+        return (self.x,self.y,self.colormap)
     
     def algoritmoKnn(self,k):
         self.setK(k)
@@ -211,31 +198,66 @@ class Algoritmo:
                 self.clasesCalculadas.append(-1)
             bandera=False
         self.definirMapaDeColores()
-        return self.graficarResultado()
+        return (self.x,self.y,self.colormap)
 
     def algoritmoKnnPonderado(self,k):
         self.setK(k)
-        aux = self.colormap
         self.clasesCalculadas.clear()
         for a in range (600):
-            self.clasesCalculadas.append(self.obtenerClaseNuevoPunto(a)[0][0])
-        print(self.colormap)
+            self.clasesCalculadas.append(self.obtenerClaseNuevoPuntoPonderado(a)[0][0])
         self.definirMapaDeColores()
-        print(self.colormap)
-        if(set(aux)==(self.colormap)):
-            print("Son iguales las listas")
-        else:
-            print("Son distintas")
-        return self.graficarResultado()
-    
+        return (self.x,self.y,self.colormap)
 
-class Canvas_grafica(FigureCanvas):
-    def __init__(self, x,y,colormap):
+    def limpiarVariables(self):
+        self.colormap.clear()
+        self.k=0
+        self.clasesCalculadas.clear()
+
+    def graficarBarras(self):
+        listaAciertos=[]
+        listaDeKs=[]
+        colores=[]
+        for a in range(15):
+            listaAciertos.append(self.listaK[a])
+            listaDeKs.append(a+1)
+            colores.append('red')
+        if(self.listaK.index(max(self.listaK))>14):
+            listaAciertos.append(max(self.listaK)+1)
+            listaDeKs.append(self.listaK.index(max(self.listaK)))
+            colores.append('red')
+        return (listaAciertos,listaDeKs,colores)
+
+    def graficarBarrasKnnPonderado(self):
+        listaAciertos=[]
+        listaDeKs=[]
+        colores=[]
+        for a in range(15):
+            listaAciertos.append(self.listaKPonderado[a])
+            listaDeKs.append(a+1)
+            colores.append('red')
+        if(self.listaKPonderado.index(max(self.listaKPonderado))>14):
+            listaAciertos.append(max(self.listaKPonderado)+1)
+            listaDeKs.append(self.listaKPonderado.index(max(self.listaKPonderado)))
+            colores.append('red')
+        return (listaAciertos,listaDeKs,colores)
+
+class Canvas_grafica_Barras(FigureCanvas):
+    def __init__(self, listaAciertos, listaDeKs, colores):
         self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
             sharey=True, facecolor='white')
         super().__init__(self.fig)
-        self.ax.scatter(x, y, color=colormap)
-        self.ax.axvline(x=0, c="black")
-        self.ax.axhline(y=0, c="black")
-        self.ax.axis('equal')
-        self.fig.suptitle('Algoritmo Knn con K Optimo',size=9)
+        self.ax.bar( listaDeKs, listaAciertos, color=colores)
+        self.fig.suptitle('Grafica de Barras Knn Optimo',size=9)
+
+class Canvas_grafica(FigureCanvas):
+    def __init__(self, parent=None):     
+        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
+            sharey=True, facecolor='white')
+        super().__init__(self.fig) 
+
+        nombres = ['15', '25', '30', '35','40']
+        colores = ['red','red','red','red', 'red']
+        tamaño = [10, 15, 20, 25, 30]
+
+        self.ax.bar(nombres, tamaño, color = colores)
+        self.fig.suptitle('Grafica de Barras',size=9)

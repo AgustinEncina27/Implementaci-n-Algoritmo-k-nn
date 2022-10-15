@@ -8,6 +8,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolBar
 import matplotlib.pyplot as plt
 from Controlador import Controlador
+from PyQt5 import sip
 
 
 class MainWindow(QMainWindow):
@@ -67,34 +68,59 @@ class Interfaz_Grafica(QWidget):
         super(Interfaz_Grafica,self).__init__()
         self.view = Ui_Form3()
         self.view.setupUi(self)
-        self.size=0
+        self.size=self.view.horizontalSlider.value()
         self.view.pushButton_2.clicked.connect(self.cambiar_A_Interfaz_Principal)
         self.view.pushButton.clicked.connect(self.cambiarGrafico)
         self.view.mostrarK.setText(str(self.view.horizontalSlider.value()))
         
         self.view.horizontalSlider.valueChanged.connect(self.cambiarValor)
-        grafica1=control.mostrarResultadoAlgoritmo()
-        grafica2=Canvas_grafica()
-        grafica3=control.mostrarResultadoAlgoritmoPonderado()
-        grafica4=Canvas_grafica()
+        self.grafica1=Canvas_grafica()
+        listaAciertos, listaDeKs, colores = control.mostrarGraficoBarras()
+        self.grafica2=Canvas_grafica_Barras(listaAciertos, listaDeKs, colores)
+        self.grafica3=Canvas_grafica()
+        self.cambiarGrafico()
+        listaAciertosPonderado, listaDeKsPonderado, coloresPonderado = control.mostrarGraficoBarrasPonderado()
+        self.grafica4=Canvas_grafica_Barras(listaAciertosPonderado, listaDeKsPonderado, coloresPonderado)
+        self.navigrafica1=NavigationToolBar(self.grafica1,self)
+        self.navigrafica2=NavigationToolBar(self.grafica2,self)
+        self.navigrafica3=NavigationToolBar(self.grafica3,self)
+        self.navigrafica4=NavigationToolBar(self.grafica4,self)
 
-
-
-        self.view.grafica1.addWidget(grafica1)
-        self.view.grafica2.addWidget(grafica2)
-        self.view.grafica3.addWidget(grafica3)
-        self.view.grafica4.addWidget(grafica4)
-        self.view.grafica1.addWidget(NavigationToolBar(grafica1,self))
-        self.view.grafica2.addWidget(NavigationToolBar(grafica2,self))
-        self.view.grafica3.addWidget(NavigationToolBar(grafica3,self))
-        self.view.grafica4.addWidget(NavigationToolBar(grafica4,self))
+        self.view.grafica1.addWidget(self.grafica1)
+        self.view.grafica2.addWidget(self.grafica2)
+        self.view.grafica3.addWidget(self.grafica3)
+        self.view.grafica4.addWidget(self.grafica4)
+        self.view.grafica1.addWidget(self.navigrafica1)
+        self.view.grafica2.addWidget(self.navigrafica2)
+        self.view.grafica3.addWidget(self.navigrafica3)
+        self.view.grafica4.addWidget(self.navigrafica4)
     
     def cambiarGrafico(self):
-        control.obtenerK(self.size)
+        self.grafica1.ax.clear()
+        x, y, colormap = control.mostrarResultadoAlgoritmo(self.size)
+        self.grafica1.ax.scatter(x, y, color=colormap)
+        self.grafica1.ax.axvline(x=0, c="black")
+        self.grafica1.ax.axhline(y=0, c="black")
+        self.grafica1.ax.axis('equal')
+        self.grafica1.fig.suptitle('Algoritmo Knn con K Optimo',size=9)
+        self.grafica1.draw()
+        control.algoritmo.limpiarVariables()
+
+        self.grafica3.ax.clear()
+        xPonderado, yPonderado, colormapPonderado = control.mostrarResultadoAlgoritmoPonderado(self.size)
+        self.grafica3.ax.scatter(xPonderado, yPonderado, color=colormapPonderado)
+        self.grafica3.ax.axvline(x=0, c="black")
+        self.grafica3.ax.axhline(y=0, c="black")
+        self.grafica3.ax.axis('equal')
+        self.grafica3.fig.suptitle('Algoritmo Knn con K Optimo',size=9)
+        self.grafica3.draw()
+        control.algoritmo.limpiarVariables()
+        #self.grafica3=control.obtenerGraficoPonderadoConK(self.size)
+        #QtWidgets.QMessageBox.critical(self, "error", "Se ha actualizado el grafico")
     
     def cambiarValor(self):
-        self.size=str(self.view.horizontalSlider.value())
-        self.view.mostrarK.setText(self.size)
+        self.size=self.view.horizontalSlider.value()
+        self.view.mostrarK.setText(str(self.size))
 
     def cambiar_A_Interfaz_Principal(self):
         widget.setCurrentWidget(principal)
@@ -104,17 +130,19 @@ class Interfaz_Grafica(QWidget):
 #-------------------------------------------------------------------------  
 
 class Canvas_grafica(FigureCanvas):
-    def __init__(self, parent=None):     
+    def __init__(self):
+        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
+            sharey=True, facecolor='white')
+        super().__init__(self.fig)
+
+class Canvas_grafica_Barras(FigureCanvas):
+    def __init__(self, listaAciertos, listaDeKs, colores, parent=None):     
         self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
             sharey=True, facecolor='white')
         super().__init__(self.fig) 
-
-        nombres = ['15', '25', '30', '35','40']
-        colores = ['red','red','red','red', 'red']
-        tamaño = [10, 15, 20, 25, 30]
-
-        self.ax.bar(nombres, tamaño, color = colores)
+        self.ax.bar(listaDeKs, listaAciertos, color = colores)
         self.fig.suptitle('Grafica de Barras',size=9)
+
 
 app= QApplication(sys.argv)
 widget=QtWidgets.QStackedWidget()

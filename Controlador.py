@@ -22,8 +22,26 @@ class Controlador():
         self.coordenadaX=0
         self.coordenadaY=0
     
-    def mostrarResultadoAlgoritmo(self):
-        return self.algoritmo.algoritmoKnn(33)
+    def mostrarResultadoAlgoritmo(self,k):
+        x, y, colormap = self.algoritmo.algoritmoKnn(k)
+        return (x,y,colormap)
     
-    def mostrarResultadoAlgoritmoPonderado(self):
-        return self.algoritmo.algoritmoKnnPonderado(33)
+    def mostrarResultadoAlgoritmoPonderado(self,k):
+        xPonderado, yPonderado, colormapPonderado = self.algoritmo.algoritmoKnnPonderado(k)
+        return (xPonderado, yPonderado, colormapPonderado)
+    
+    def obtenerGraficoKnnConK(self,k):
+        self.algoritmo.algoritmoKnn(k)
+        self.algoritmo.cambiarAtributos()
+
+    def obtenerGraficoPonderadoConK(self,k):
+        return self.algoritmo.algoritmoKnnPonderado(k)
+
+    def mostrarGraficoBarras(self):
+        self.algoritmo.obtenerKOptimo()
+        return self.algoritmo.graficarBarras()
+
+    def mostrarGraficoBarrasPonderado(self):
+        self.algoritmo.obtenerKOptimoKnnPonderado()
+        return self.algoritmo.graficarBarrasKnnPonderado()
+        
