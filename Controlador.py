@@ -12,9 +12,15 @@ class Controlador():
         self.algoritmo=Algoritmo()
         self.algoritmo.leerArchivo(direccion)
         self.algoritmo.calcularMatrizDistancias()
+        
+    def obtenerGraficoKnnConK(self,k):
+        return self.algoritmo.algoritmoKnn(k)
     
-    def obtenerK(self,k):
-        self.k=k
+    def obtenerGraficoPonderadoConK(self,k):
+        return self.algoritmo.algoritmoKnnPonderado(k)
+
+    def limpiarDatosAlgoritmo(self):
+        self.algoritmo.limpiarDatos()
     
     def limpiarDatos(self):
         self.direccion=''

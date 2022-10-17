@@ -23,6 +23,20 @@ class Algoritmo:
         self.matrizDistancia=[]
         self.clasesCalculadas=[]
 
+    def limpiarDatos(self):
+        self.x = []
+        self.y = []
+        self.clase = []
+        self.contador=0
+        self.colormap=[]
+        self.k=0
+        self.nuevoPunto=[]
+        self.distanciasOrdenadas=[]
+        self.vecino=[]
+        self.vecinoPonderado=[]
+        self.matrizDistancia=[]
+        self.clasesCalculadas=[]
+    
     #Lee el csv y guarda los datos en las listas x, y, clase
     def leerArchivo(self,nombreArchivo):
         with open(nombreArchivo, 'r') as file:

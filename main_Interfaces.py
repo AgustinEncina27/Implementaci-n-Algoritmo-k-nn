@@ -1,6 +1,9 @@
+
 import sys
+from xml.dom.minidom import TypeInfo
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog
+from PyQt5 import sip
 from Ui_Interfaz_Principal import Ui_MainWindow
 from Ui_Interfaz_k import Ui_Form2
 from Ui_Interfaz_Grafica import Ui_Form3
@@ -67,34 +70,56 @@ class Interfaz_Grafica(QWidget):
         super(Interfaz_Grafica,self).__init__()
         self.view = Ui_Form3()
         self.view.setupUi(self)
-        self.size=0
+        self.size=self.view.horizontalSlider.value()
         self.view.pushButton_2.clicked.connect(self.cambiar_A_Interfaz_Principal)
         self.view.pushButton.clicked.connect(self.cambiarGrafico)
         self.view.mostrarK.setText(str(self.view.horizontalSlider.value()))
         
         self.view.horizontalSlider.valueChanged.connect(self.cambiarValor)
-        grafica1=control.mostrarResultadoAlgoritmo()
-        grafica2=Canvas_grafica()
-        grafica3=control.mostrarResultadoAlgoritmoPonderado()
-        grafica4=Canvas_grafica()
+        self.grafica1=control.mostrarResultadoAlgoritmo()
+        self.grafica2=Canvas_grafica()
+        self.grafica3=control.mostrarResultadoAlgoritmoPonderado()
+        self.grafica4=Canvas_grafica()
+        self.navigrafica1=NavigationToolBar(self.grafica1,self)
+        self.navigrafica2=NavigationToolBar(self.grafica2,self)
+        self.navigrafica3=NavigationToolBar(self.grafica3,self)
+        self.navigrafica4=NavigationToolBar(self.grafica4,self)
 
 
 
-        self.view.grafica1.addWidget(grafica1)
-        self.view.grafica2.addWidget(grafica2)
-        self.view.grafica3.addWidget(grafica3)
-        self.view.grafica4.addWidget(grafica4)
-        self.view.grafica1.addWidget(NavigationToolBar(grafica1,self))
-        self.view.grafica2.addWidget(NavigationToolBar(grafica2,self))
-        self.view.grafica3.addWidget(NavigationToolBar(grafica3,self))
-        self.view.grafica4.addWidget(NavigationToolBar(grafica4,self))
+
+        self.view.grafica1.addWidget(self.grafica1)
+        self.view.grafica2.addWidget(self.grafica2)
+        self.view.grafica3.addWidget(self.grafica3)
+        self.view.grafica4.addWidget(self.grafica4)
+        self.view.grafica1.addWidget(self.navigrafica1)
+        self.view.grafica2.addWidget(self.navigrafica2)
+        self.view.grafica3.addWidget(self.navigrafica3)
+        self.view.grafica4.addWidget(self.navigrafica4)
     
     def cambiarGrafico(self):
-        control.obtenerK(self.size)
+        '''
+        self.grafica1.deleteLater()
+        self.grafica3.deleteLater()
+        self.navigrafica1.deleteLater()
+        self.navigrafica3.deleteLater()
+        '''
+        
+        #control.limpiarDatosAlgoritmo()
+        
+        self.grafico1=control.obtenerGraficoKnnConK(self.size)
+        self.grafico3=control.obtenerGraficoKnnConK(self.size)
+        self.navigrafica1=NavigationToolBar(self.grafica1,self)
+        self.navigrafica3=NavigationToolBar(self.grafica3,self)
+        self.view.grafica1.replaceWidget(self.grafico1)
+        self.view.grafica3.replaceWidget(self.grafico3)
+        self.view.grafica1.replaceWidget(self.navigrafica1)
+        self.view.grafica3.replaceWidget(self.navigrafica3)
+        
     
     def cambiarValor(self):
-        self.size=str(self.view.horizontalSlider.value())
-        self.view.mostrarK.setText(self.size)
+        self.size=self.view.horizontalSlider.value()
+        self.view.mostrarK.setText(str(self.size))
 
     def cambiar_A_Interfaz_Principal(self):
         widget.setCurrentWidget(principal)
