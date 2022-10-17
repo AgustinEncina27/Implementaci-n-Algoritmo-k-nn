@@ -1,4 +1,5 @@
 import sys
+from turtle import width
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog
 from Ui_Interfaz_Principal import Ui_MainWindow
@@ -140,7 +141,8 @@ class Canvas_grafica_Barras(FigureCanvas):
         self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
             sharey=True, facecolor='white')
         super().__init__(self.fig) 
-        self.ax.bar(listaDeKs, listaAciertos, color = colores)
+        self.ax.bar(listaDeKs, listaAciertos, color = colores, width=0.4)
+        self.ax.set_xticks(listaDeKs)
         self.fig.suptitle('Grafica de Barras',size=9)
 
 

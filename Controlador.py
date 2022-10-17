@@ -32,7 +32,6 @@ class Controlador():
     
     def obtenerGraficoKnnConK(self,k):
         self.algoritmo.algoritmoKnn(k)
-        self.algoritmo.cambiarAtributos()
 
     def obtenerGraficoPonderadoConK(self,k):
         return self.algoritmo.algoritmoKnnPonderado(k)
