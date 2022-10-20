@@ -8,6 +8,7 @@ class Controlador():
         self.coordenadaY=0
         self.algoritmo=None
 
+
     def obtenerDatos(self,direccion):
         self.algoritmo=Algoritmo()
         self.algoritmo.leerArchivo(direccion)
@@ -42,11 +43,13 @@ class Controlador():
     def obtenerGraficoPonderadoConK(self,k):
         return self.algoritmo.algoritmoKnnPonderado(k)
 
-    def mostrarGraficoBarras(self):
+    def inicilizarGraficoBarras(self):
         self.algoritmo.obtenerKOptimo()
+        self.algoritmo.obtenerKOptimoKnnPonderado()
+
+    def mostrarGraficoBarras(self):
         return self.algoritmo.graficarBarras()
 
     def mostrarGraficoBarrasPonderado(self):
-        self.algoritmo.obtenerKOptimoKnnPonderado()
         return self.algoritmo.graficarBarrasKnnPonderado()
         

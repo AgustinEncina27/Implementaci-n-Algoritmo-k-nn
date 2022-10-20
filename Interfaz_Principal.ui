@@ -6,94 +6,79 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>320</height>
+    <width>579</width>
+    <height>230</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>600</width>
-    <height>320</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>600</width>
-    <height>300</height>
-   </size>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>601</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>PMingLiU-ExtB</family>
-      <pointsize>48</pointsize>
-     </font>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>BIENVENIDO</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>571</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;GUÍA DEL USUARIO&lt;/p&gt;&lt;p&gt;En la esquina superior izquierda se encuentra el menú con las distintas funcionalidades que posee esta aplicación.&lt;/p&gt;&lt;p&gt;1-Pestaña de &amp;quot;Algoritmo k-nn&amp;quot;:&lt;/p&gt;&lt;p&gt;1.1-Pestaña &amp;quot;Analizar Dataset&amp;quot;:Al presionar esta pestaña se trasladará a la interfaz donde siguiendo los pasos podrá &lt;br/&gt;implementar el Algoritmo k-nn.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-    </property>
-   </widget>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>PMingLiU-ExtB</family>
+        <pointsize>48</pointsize>
+       </font>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>BIENVENIDO</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;GUÍA DEL USUARIO&lt;/p&gt;&lt;p&gt;En la esquina superior izquierda se encuentra el menú con las distintas funcionalidades que posee esta aplicación.&lt;/p&gt;&lt;p&gt;1-Pestaña de &amp;quot;Algoritmo k-nn&amp;quot;:&lt;/p&gt;&lt;p&gt;1.1-Pestaña &amp;quot;Analizar Dataset&amp;quot;:Al presionar esta pestaña se trasladará a la interfaz donde siguiendo los pasos podrá &lt;br/&gt;implementar el Algoritmo k-nn.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>579</width>
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuAlgoritmo_k_nn">
+   <widget class="QMenu" name="menuAlgoritmo_K_nn">
     <property name="title">
-     <string>Algoritmo k-nn</string>
+     <string>Algoritmo K-nn</string>
     </property>
     <addaction name="Analizar_Dataset"/>
    </widget>
-   <addaction name="menuAlgoritmo_k_nn"/>
+   <addaction name="menuAlgoritmo_K_nn"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="Analizar_Dataset">
    <property name="text">
     <string>Analizar Dataset</string>
-   </property>
-  </action>
-  <action name="Volver">
-   <property name="text">
-    <string>Volver al inicio</string>
    </property>
   </action>
  </widget>
