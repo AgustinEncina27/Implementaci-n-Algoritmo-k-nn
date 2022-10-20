@@ -72,7 +72,7 @@ class Algoritmo:
             #print(i)
         #print(self.listaK)
         max_value = max(self.listaK)
-        print('Maximum value:', max_value, "At index:", self.listaK.index(max_value))
+        print('Maximum value:', max_value, "At index:", self.listaK.index(max_value)+1)
         return self.listaK.index(max_value)+1
 
     def obtenerKOptimoKnnPonderado(self):
@@ -100,7 +100,7 @@ class Algoritmo:
             #print(i)
         #print(self.listaKPonderado)
         max_value = max(self.listaKPonderado)
-        print('Maximum value:', max_value, "At index:", self.listaKPonderado.index(max_value))
+        print('Maximum value:', max_value, "At index:", self.listaKPonderado.index(max_value)+1)
         return self.listaKPonderado.index(max_value)+1
 
     
