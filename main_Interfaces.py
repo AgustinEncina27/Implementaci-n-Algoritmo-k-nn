@@ -99,9 +99,11 @@ class Interfaz_Grafica(QWidget):
     def cambiarGrafico(self):
         self.grafica1.ax.clear()
         x, y, colormap = control.mostrarResultadoAlgoritmo(self.size)
-        self.grafica1.ax.scatter(x, y, color=colormap)
+        self.grafica1.ax.scatter(x, y, color=colormap, s=7)
         self.grafica1.ax.axvline(x=0, c="black")
         self.grafica1.ax.axhline(y=0, c="black")
+        self.grafica1.ax.set_xlabel('Eje X')
+        self.grafica1.ax.set_ylabel('Eje Y')
         self.grafica1.ax.axis('equal')
         self.grafica1.fig.suptitle('Algoritmo Knn con K Optimo',size=9)
         self.grafica1.draw()
@@ -109,9 +111,11 @@ class Interfaz_Grafica(QWidget):
 
         self.grafica3.ax.clear()
         xPonderado, yPonderado, colormapPonderado = control.mostrarResultadoAlgoritmoPonderado(self.size)
-        self.grafica3.ax.scatter(xPonderado, yPonderado, color=colormapPonderado)
+        self.grafica3.ax.scatter(xPonderado, yPonderado, color=colormapPonderado, s=7)
         self.grafica3.ax.axvline(x=0, c="black")
         self.grafica3.ax.axhline(y=0, c="black")
+        self.grafica3.ax.set_xlabel('Eje X')
+        self.grafica3.ax.set_ylabel('Eje Y')
         self.grafica3.ax.axis('equal')
         self.grafica3.fig.suptitle('Algoritmo Knn con K Optimo',size=9)
         self.grafica3.draw()
@@ -137,12 +141,16 @@ class Canvas_grafica(FigureCanvas):
         super().__init__(self.fig)
 
 class Canvas_grafica_Barras(FigureCanvas):
-    def __init__(self, listaAciertos, listaDeKs, colores, parent=None):     
+    def __init__(self, listaAciertos, listaDeKs, colores, parent=None):
         self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
             sharey=True, facecolor='white')
-        super().__init__(self.fig) 
-        self.ax.bar(listaDeKs, listaAciertos, color = colores, width=0.4)
+        super().__init__(self.fig)
+        self.ax.plot(listaDeKs, listaAciertos)
+        for a in range(len(listaDeKs)):
+            self.ax.text(listaDeKs[a],listaAciertos[a],listaAciertos[a],size=6)
         self.ax.set_xticks(listaDeKs)
+        self.ax.set_xlabel('Valor de K')
+        self.ax.set_ylabel('Cantidad de aciertos')
         self.fig.suptitle('Grafica de Barras',size=9)
 
 
