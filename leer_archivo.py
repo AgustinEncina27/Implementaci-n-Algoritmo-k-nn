@@ -1,3 +1,4 @@
+from queue import PriorityQueue
 from traceback import print_tb
 from turtle import st
 import matplotlib.pyplot as plt
@@ -28,8 +29,6 @@ class Algoritmo:
         self.contadorClase2=0
         self.contadorClase0=0
         self.listaAciertosXClases=[]
-        for a in range(600):
-            self.listaAciertosXClases.append([0,0,0,0,0,0])
 
     def limpiarDatos(self):
         self.x = []
@@ -73,6 +72,9 @@ class Algoritmo:
             vecinos={}
             self.cantClases.append(vecinos)
         bandera=False
+        self.listaAciertosXClases.clear()
+        for a in range(600):
+            self.listaAciertosXClases.append([0,0,0,0,0,0])
         for i in range(1,self.contador-1):
             self.k=i
             for fila in range(self.contador-1):
@@ -98,8 +100,11 @@ class Algoritmo:
             self.listaAciertosXClases[self.k-1][5]=self.contadorClase2-self.listaAciertosXClases[self.k-1][4]
             #print(i)
         #print(self.listaK)
+        print('K OPTIMO NORMALLLLLLLLLLLLL')
         print(self.listaAciertosXClases)
         max_value = max(self.listaK)
+        kOptimos = self.find_indices(self.listaK,max_value)
+        print(kOptimos)
         print('Maximum value:', max_value, "At index:", self.listaK.index(max_value)+1)
         return self.listaK.index(max_value)+1
 
@@ -111,6 +116,9 @@ class Algoritmo:
             vecinos={}
             self.cantClases.append(vecinos)
         bandera=False
+        self.listaAciertosXClases.clear()
+        for a in range(600):
+            self.listaAciertosXClases.append([0,0,0,0,0,0])
         for i in range(1,self.contador-1):
             self.k=i
             for fila in range(self.contador-1):
@@ -124,13 +132,32 @@ class Algoritmo:
                     bandera=True
                 if(resultadoClase[0][0]==self.clase[fila] and bandera):
                     self.listaKPonderado[i-1] = self.listaKPonderado[i-1] + 1
+                    if(self.clase[fila]==0):
+                        self.listaAciertosXClases[self.k-1][0]+=1
+                    if(self.clase[fila]==1):
+                        self.listaAciertosXClases[self.k-1][2]+=1
+                    if(self.clase[fila]==2):
+                        self.listaAciertosXClases[self.k-1][4]+=1
                 bandera=False
+            self.listaAciertosXClases[self.k-1][1]=self.contadorClase0-self.listaAciertosXClases[self.k-1][0]
+            self.listaAciertosXClases[self.k-1][3]=self.contadorClase1-self.listaAciertosXClases[self.k-1][2]
+            self.listaAciertosXClases[self.k-1][5]=self.contadorClase2-self.listaAciertosXClases[self.k-1][4]
             #print(i)
         #print(self.listaKPonderado)
+        print('K OPTIMOS PONDERADOOOOOO')
+        print(self.listaAciertosXClases)
         max_value = max(self.listaKPonderado)
+        kOptimos = self.find_indices(self.listaKPonderado,max_value)
+        print(kOptimos)
         print('Maximum value:', max_value, "At index:", self.listaKPonderado.index(max_value)+1)
         return self.listaKPonderado.index(max_value)+1
-
+    
+    def find_indices(self,list_to_check, item_to_find):
+        indices = []
+        for idx, value in enumerate(list_to_check):
+            if value == item_to_find:
+                indices.append(idx+1)
+        return indices
     
     def calcularMatrizDistancias(self):
         self.matrizDistancia =  [ [ None for y in range(self.contador-1) ] for x in range( self.contador-1) ]   
