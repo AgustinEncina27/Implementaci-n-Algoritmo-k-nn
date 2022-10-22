@@ -30,12 +30,12 @@ class Controlador():
         self.coordenadaY=0
     
     def mostrarResultadoAlgoritmo(self,k):
-        x, y, colormap = self.algoritmo.algoritmoKnn(k)
-        return (x,y,colormap)
+        x, y, colormap, listaLeyendas = self.algoritmo.algoritmoKnn(k)
+        return (x,y,colormap,listaLeyendas)
     
     def mostrarResultadoAlgoritmoPonderado(self,k):
-        xPonderado, yPonderado, colormapPonderado = self.algoritmo.algoritmoKnnPonderado(k)
-        return (xPonderado, yPonderado, colormapPonderado)
+        xPonderado, yPonderado, colormapPonderado, listaLeyendasPonderado = self.algoritmo.algoritmoKnnPonderado(k)
+        return (xPonderado, yPonderado, colormapPonderado, listaLeyendasPonderado)
     
     def obtenerGraficoKnnConK(self,k):
         self.algoritmo.algoritmoKnn(k)

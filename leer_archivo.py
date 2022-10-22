@@ -6,6 +6,7 @@ import math
 import operator
 import numpy
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.lines import Line2D
 
 class Algoritmo:
 
@@ -22,6 +23,13 @@ class Algoritmo:
         self.listaKPonderado=[]
         self.grafico=None
         self.cantClases=[]
+        self.listaLeyendas=[]
+        self.contadorClase1=0
+        self.contadorClase2=0
+        self.contadorClase0=0
+        self.listaAciertosXClases=[]
+        for a in range(600):
+            self.listaAciertosXClases.append([0,0,0,0,0,0])
 
     def limpiarDatos(self):
         self.x = []
@@ -47,6 +55,16 @@ class Algoritmo:
                     self.x.append(float(row[0]))
                     self.y.append(float(row[1]))
                     self.clase.append(float(row[2]))
+                    if(self.clase[self.contador-2]==0):
+                        self.contadorClase0+=1
+                    if(self.clase[self.contador-2]==1):
+                        self.contadorClase1+=1
+                    if(self.clase[self.contador-2]==2):
+                        self.contadorClase2+=1
+        print(self.contadorClase0)
+        print(self.contadorClase1)
+        print(self.contadorClase2)
+                    
         
     def obtenerKOptimo(self):
         for a in range(self.contador-1):
@@ -68,9 +86,19 @@ class Algoritmo:
                     bandera=True
                 if(resultadoClase[0][0]==self.clase[fila] and bandera):
                     self.listaK[i-1] = self.listaK[i-1] + 1
+                    if(self.clase[fila]==0):
+                        self.listaAciertosXClases[self.k-1][0]+=1
+                    if(self.clase[fila]==1):
+                        self.listaAciertosXClases[self.k-1][2]+=1
+                    if(self.clase[fila]==2):
+                        self.listaAciertosXClases[self.k-1][4]+=1
                 bandera=False
+            self.listaAciertosXClases[self.k-1][1]=self.contadorClase0-self.listaAciertosXClases[self.k-1][0]
+            self.listaAciertosXClases[self.k-1][3]=self.contadorClase1-self.listaAciertosXClases[self.k-1][2]
+            self.listaAciertosXClases[self.k-1][5]=self.contadorClase2-self.listaAciertosXClases[self.k-1][4]
             #print(i)
         #print(self.listaK)
+        print(self.listaAciertosXClases)
         max_value = max(self.listaK)
         print('Maximum value:', max_value, "At index:", self.listaK.index(max_value)+1)
         return self.listaK.index(max_value)+1
@@ -140,21 +168,31 @@ class Algoritmo:
     #Define el mapa de colores para el grafico, habria que hacerlo mas general porque ahora esta hecho para 3 clases
     def definirMapaDeColores(self):
         self.colormap.clear()
+        self.listaLeyendas.clear()
         contador=0
+        leyendaRoja=Line2D([0], [0], marker='o', color='w', label='Clase 0', markerfacecolor='red', markersize=12)
+        leyendaVerde=Line2D([0], [0], marker='o', color='w', label='Clase 1', markerfacecolor='green',markersize=12)
+        leyendaAzul=Line2D([0], [0], marker='o', color='w', label='Clase 2', markerfacecolor='blue',markersize=12)
         for color in self.clase:
             if(color==0):
                 if(self.clasesCalculadas[contador]==0):
                     self.colormap.append('r')
+                    if(leyendaRoja not in self.listaLeyendas):
+                        self.listaLeyendas.append(leyendaRoja)
                 else:
                     self.colormap.append('lightcoral')
             if(color==1):
                 if(self.clasesCalculadas[contador]==1):
                     self.colormap.append('g')
+                    if(leyendaVerde not in self.listaLeyendas):
+                        self.listaLeyendas.append(leyendaVerde)
                 else:
                     self.colormap.append('lightgreen')
             if(color==2):
                 if(self.clasesCalculadas[contador]==2):
                     self.colormap.append('b')
+                    if(leyendaAzul not in self.listaLeyendas):
+                        self.listaLeyendas.append(leyendaAzul)
                 else:
                     self.colormap.append('cyan')
             contador+=1
@@ -229,7 +267,7 @@ class Algoritmo:
                 self.clasesCalculadas.append(-1)
             bandera=False
         self.definirMapaDeColores()
-        return (self.x,self.y,self.colormap)
+        return (self.x,self.y,self.colormap,self.listaLeyendas)
 
     def algoritmoKnnPonderado(self,k):
         self.setK(k)
@@ -237,7 +275,7 @@ class Algoritmo:
         for a in range (600):
             self.clasesCalculadas.append(self.obtenerNuevaClaseKnnPonderado(a)[0][0])
         self.definirMapaDeColores()
-        return (self.x,self.y,self.colormap)
+        return (self.x,self.y,self.colormap,self.listaLeyendas)
 
     def limpiarVariables(self):
         self.colormap.clear()
@@ -250,11 +288,11 @@ class Algoritmo:
         colores=[]
         for a in range(15):
             listaAciertos.append(self.listaK[a])
-            listaDeKs.append(a+1)
+            listaDeKs.append(str(a+1))
             colores.append('red')
         if(self.listaK.index(max(self.listaK))>14):
             listaAciertos.append(max(self.listaK))
-            listaDeKs.append(self.listaK.index(max(self.listaK))+1)
+            listaDeKs.append(str(self.listaK.index(max(self.listaK))+1))
             colores.append('red')
         return (listaAciertos,listaDeKs,colores)
 
@@ -264,10 +302,10 @@ class Algoritmo:
         colores=[]
         for a in range(15):
             listaAciertos.append(self.listaKPonderado[a])
-            listaDeKs.append(a+1)
+            listaDeKs.append(str(a+1))
             colores.append('red')
         if(self.listaKPonderado.index(max(self.listaKPonderado))>14):
             listaAciertos.append(max(self.listaKPonderado))
-            listaDeKs.append(self.listaKPonderado.index(max(self.listaKPonderado))+1)
+            listaDeKs.append(str(self.listaKPonderado.index(max(self.listaKPonderado))+1))
             colores.append('red')
         return (listaAciertos,listaDeKs,colores)

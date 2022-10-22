@@ -11,6 +11,8 @@ from Ui_Interfaz_Grafica import Ui_Form3
 from Ui_Interfaz_Grafica_K_optimo import Ui_Form4
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolBar
+#import matplotlib.patches as mpatches
+from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 from Controlador import Controlador
 from PyQt5 import sip
@@ -122,26 +124,25 @@ class Interfaz_Grafica(QWidget):
     
     def cambiarGrafico(self):
         self.grafica1.ax.clear()
-        x, y, colormap = control.mostrarResultadoAlgoritmo(self.size)
-        scatter = self.grafica1.ax.scatter(x, y, c=colormap, s=7)
+        x, y, colormap, listaLeyendas = control.mostrarResultadoAlgoritmo(self.size)
+        self.grafica1.ax.scatter(x, y, c=colormap, s=7)
         self.grafica1.ax.axvline(x=0, c="black")
         self.grafica1.ax.axhline(y=0, c="black")
         self.grafica1.ax.set_xlabel('Eje X')
         self.grafica1.ax.set_ylabel('Eje Y')
-        legend1 = self.grafica1.ax.legend(*scatter.legend_elements(),
-                    loc="lower left", title="Classes")
-        self.grafica1.ax.add_artist(legend1)
+        self.grafica1.ax.legend(handles=listaLeyendas)
         self.grafica1.ax.axis('equal')
         self.grafica1.draw()
         control.algoritmo.limpiarVariables()
 
         self.grafica2.ax.clear()
-        xPonderado, yPonderado, colormapPonderado = control.mostrarResultadoAlgoritmoPonderado(self.size)
+        xPonderado, yPonderado, colormapPonderado, listaLeyendasPonderado = control.mostrarResultadoAlgoritmoPonderado(self.size)
         self.grafica2.ax.scatter(xPonderado, yPonderado, c=colormapPonderado, s=7)
         self.grafica2.ax.axvline(x=0, c="black")
         self.grafica2.ax.axhline(y=0, c="black")
         self.grafica2.ax.set_xlabel('Eje X')
         self.grafica2.ax.set_ylabel('Eje Y')
+        self.grafica2.ax.legend(handles=listaLeyendasPonderado)
         self.grafica2.ax.axis('equal')
         self.grafica2.draw()
         control.algoritmo.limpiarVariables()
