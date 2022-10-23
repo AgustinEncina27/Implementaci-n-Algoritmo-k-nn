@@ -1,7 +1,4 @@
-
-from operator import delitem
 import sys
-from turtle import width
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog
 from PyQt5 import sip
@@ -12,7 +9,7 @@ from Ui_Interfaz_Grafica_K_optimo import Ui_Form4
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolBar
 #import matplotlib.patches as mpatches
-from matplotlib.lines import Line2D
+from PyQt5 import QtCore
 import matplotlib.pyplot as plt
 from Controlador import Controlador
 from PyQt5 import sip
@@ -195,8 +192,26 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         self.view.pushButton_2.clicked.connect(self.cambiar_A_Interfaz_Grafica)
         self.pantallaAnterior=pantallaAnterior
         listaAciertos, listaDeKs, colores = control.mostrarGraficoBarras()
+        mayor=0
+        indice=0
+        for n in listaAciertos:
+            if(n>=mayor):
+                mayor=n
+                indice=listaAciertos.index(n)
+        a=str(listaDeKs[indice])
+        _translate = QtCore.QCoreApplication.translate
+        self.view.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo sin ponderación="+a+"</span></p></body></html>"))
+
         self.grafica1=Canvas_grafica_Barras(listaAciertos, listaDeKs, colores)
         listaAciertosPonderado, listaDeKsPonderado, coloresPonderado = control.mostrarGraficoBarrasPonderado()
+        mayor=0
+        indice=0
+        for n in listaAciertosPonderado:
+            if(n>=mayor):
+                mayor=n
+                indice=listaAciertosPonderado.index(n)
+        a=str(listaDeKsPonderado[indice])
+        self.view.label_2.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo con ponderación="+a+"</span></p></body></html>"))
         self.grafica2=Canvas_grafica_Barras(listaAciertosPonderado, listaDeKsPonderado, coloresPonderado)
         self.navigrafica1=NavigationToolBar(self.grafica1,self)
         self.navigrafica2=NavigationToolBar(self.grafica2,self)
@@ -243,6 +258,7 @@ class Canvas_grafica_Barras(FigureCanvas):
 #if __name__ == '__main__':
 app= QApplication(sys.argv)
 widget=QtWidgets.QStackedWidget()
+widget.setWindowTitle("Algoritmo K-nn")
 control=Controlador()
 principal = MainWindow()
 widget.addWidget(principal)

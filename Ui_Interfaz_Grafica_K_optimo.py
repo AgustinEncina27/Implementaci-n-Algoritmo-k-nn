@@ -71,6 +71,4 @@ class Ui_Form4(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo sin ponderación</span></p></body></html>"))
-        self.label_2.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo con ponderación</span></p></body></html>"))
         self.pushButton_2.setText(_translate("Form", "Volver"))
