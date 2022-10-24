@@ -8,7 +8,6 @@ from Ui_Interfaz_Grafica import Ui_Form3
 from Ui_Interfaz_Grafica_K_optimo import Ui_Form4
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolBar
-#import matplotlib.patches as mpatches
 from PyQt5 import QtCore
 import matplotlib.pyplot as plt
 from Controlador import Controlador

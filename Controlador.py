@@ -1,4 +1,4 @@
-from leer_archivo import Algoritmo
+from algoritmoKnn import Algoritmo
 
 class Controlador():
     def __init__(self):

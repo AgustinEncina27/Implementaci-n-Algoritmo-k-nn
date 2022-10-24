@@ -1,11 +1,9 @@
-from queue import PriorityQueue
 from traceback import print_tb
 from turtle import st
 import matplotlib.pyplot as plt
 import csv
 import math
 import operator
-import numpy
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.lines import Line2D
 
@@ -60,11 +58,8 @@ class Algoritmo:
                         self.contadorClase1+=1
                     if(self.clase[self.contador-2]==2):
                         self.contadorClase2+=1
-        print(self.contadorClase0)
-        print(self.contadorClase1)
-        print(self.contadorClase2)
                     
-        
+    #Funcion para calcular el K optimo de Knn estandar
     def obtenerKOptimo(self):
         for a in range(self.contador-1):
             self.listaK.append(0)
@@ -98,16 +93,12 @@ class Algoritmo:
             self.listaAciertosXClases[self.k-1][1]=self.contadorClase0-self.listaAciertosXClases[self.k-1][0]
             self.listaAciertosXClases[self.k-1][3]=self.contadorClase1-self.listaAciertosXClases[self.k-1][2]
             self.listaAciertosXClases[self.k-1][5]=self.contadorClase2-self.listaAciertosXClases[self.k-1][4]
-            #print(i)
-        #print(self.listaK)
-        print('K OPTIMO NORMALLLLLLLLLLLLL')
-        print(self.listaAciertosXClases)
         max_value = max(self.listaK)
         kOptimos = self.find_indices(self.listaK,max_value)
-        print(kOptimos)
         print('Maximum value:', max_value, "At index:", self.listaK.index(max_value)+1)
         return self.listaK.index(max_value)+1
 
+    #Funcion para calcular el K optimo de Knn ponderado
     def obtenerKOptimoKnnPonderado(self):
         for a in range(self.contador-1):
             self.listaKPonderado.append(0)
@@ -142,16 +133,12 @@ class Algoritmo:
             self.listaAciertosXClases[self.k-1][1]=self.contadorClase0-self.listaAciertosXClases[self.k-1][0]
             self.listaAciertosXClases[self.k-1][3]=self.contadorClase1-self.listaAciertosXClases[self.k-1][2]
             self.listaAciertosXClases[self.k-1][5]=self.contadorClase2-self.listaAciertosXClases[self.k-1][4]
-            #print(i)
-        #print(self.listaKPonderado)
-        print('K OPTIMOS PONDERADOOOOOO')
-        print(self.listaAciertosXClases)
         max_value = max(self.listaKPonderado)
         kOptimos = self.find_indices(self.listaKPonderado,max_value)
-        print(kOptimos)
         print('Maximum value:', max_value, "At index:", self.listaKPonderado.index(max_value)+1)
         return self.listaKPonderado.index(max_value)+1
     
+    #Permite encontrar todos los indices de un valor en una lista, para aquellos casos donde exista mas de un K optimo.
     def find_indices(self,list_to_check, item_to_find):
         indices = []
         for idx, value in enumerate(list_to_check):
@@ -159,6 +146,7 @@ class Algoritmo:
                 indices.append(idx+1)
         return indices
     
+    #Calculo de la matriz de distancias entre todos los puntos del Dataset.
     def calcularMatrizDistancias(self):
         self.matrizDistancia =  [ [ None for y in range(self.contador-1) ] for x in range( self.contador-1) ]   
         for fila in range(self.contador-1):       
@@ -168,12 +156,6 @@ class Algoritmo:
                 else:
                     self.matrizDistancia[fila][columna]=[math.sqrt(((self.x[fila]-self.x[columna])**2+(self.y[fila]-self.y[columna])**2)),self.x[columna],self.y[columna],self.clase[columna]]
                     self.matrizDistancia[columna][fila]=[self.matrizDistancia[fila][columna][0],self.x[fila],self.y[fila],self.clase[fila]]
-                    #self.matrizDistancia[fila][columna]
-        #for fila in self.matrizDistancia:
-        #    for valor in fila:
-        #        print("\t", valor, end=" ")
-        #print()
-        print("------------------------------------------------")
         contadorAuxiliar=1
         filaAOrdenar=[]
         for fila in range(self.contador-1):
@@ -182,17 +164,10 @@ class Algoritmo:
             filaOrdenada = sorted(filaAOrdenar, key=lambda x:x[0])
             for auxiliarOrdenar in range(len(filaOrdenada)):
                 self.matrizDistancia[fila] = filaOrdenada
-                #self.matrizDistancia[auxiliarOrdenar+contadorAuxiliar][columna]= -1
-                #self.matrizDistancia[columna][auxiliarOrdenar+contadorAuxiliar]
             filaAOrdenar=[]
             contadorAuxiliar=contadorAuxiliar+1
-        #for fila in self.matrizDistancia:
-        #    for valor in fila:
-        #        print("\t", valor, end=" ")
-        #    print()
-        print("++++++++++++++++++++++++++++++++++++++++++++")
 
-    #Define el mapa de colores para el grafico, habria que hacerlo mas general porque ahora esta hecho para 3 clases
+    #Define el mapa de colores para el grafico de dispersion.
     def definirMapaDeColores(self):
         self.colormap.clear()
         self.listaLeyendas.clear()
@@ -223,13 +198,12 @@ class Algoritmo:
                 else:
                     self.colormap.append('cyan')
             contador+=1
-        #print(self.colormap)
 
     #Define el atributo K
     def setK(self,k):
         self.k=k
 
-    #Define de que clase es el nuevo punto ingresado
+    #Define de que clase es el nuevo punto ingresado, en Knn Estandar. Optimizada para el calculo de K Optimo.
     def obtenerClaseNuevoPunto(self,fila):
         auxiliar=self.matrizDistancia[fila][self.k][3]
         auxiliarClases=self.cantClases[fila]
@@ -240,6 +214,7 @@ class Algoritmo:
         vecinoOrdenado = sorted(auxiliarClases.items(), key=operator.itemgetter(1),reverse=True)
         return vecinoOrdenado
 
+    #Define de que clase es el nuevo punto ingresado, en Knn Ponderado. Optimizada para el calculo de K Optimo.
     def obtenerClaseNuevoPuntoPonderado(self,fila):
         auxiliar=self.matrizDistancia[fila][self.k][3]
         auxiliarClases=self.cantClases[fila]
@@ -250,6 +225,7 @@ class Algoritmo:
         vecinoOrdenadoPonderado = sorted(auxiliarClases.items(), key=operator.itemgetter(1),reverse=True)
         return vecinoOrdenadoPonderado
 
+    #Define de que clase es el nuevo punto ingresado, en Knn Estandar.
     def obtenerNuevaClaseKnn(self,fila):
         vecinos={}
         for cantidadK in range(self.k):
@@ -261,6 +237,7 @@ class Algoritmo:
         vecinoOrdenado = sorted(vecinos.items(), key=operator.itemgetter(1),reverse=True)
         return vecinoOrdenado
 
+    #Define de que clase es el nuevo punto ingresado, en Knn Ponderado.
     def obtenerNuevaClaseKnnPonderado(self,fila):
         vecinos={}
         for cantidadK in range(self.k):
@@ -276,10 +253,11 @@ class Algoritmo:
     def graficarResultado(self):
         return (self.x,self.y,self.colormap)
     
+    #Realiza el llamado a todas las funciones necesarias para la ejecucion del Algoritmo Knn Estandar.
     def algoritmoKnn(self,k):
         self.setK(k)
         bandera=False
-        for a in range(600):
+        for a in range(self.contador-1):
             resultadoClase = self.obtenerNuevaClaseKnn(a)
             if(len(resultadoClase)>1):
                 if(resultadoClase[0][1]==resultadoClase[1][1]):
@@ -296,10 +274,11 @@ class Algoritmo:
         self.definirMapaDeColores()
         return (self.x,self.y,self.colormap,self.listaLeyendas)
 
+    #Realiza el llamado a todas las funciones necesarias para la ejecucion del Algoritmo Knn Ponderado.
     def algoritmoKnnPonderado(self,k):
         self.setK(k)
         self.clasesCalculadas.clear()
-        for a in range (600):
+        for a in range (self.contador-1):
             self.clasesCalculadas.append(self.obtenerNuevaClaseKnnPonderado(a)[0][0])
         self.definirMapaDeColores()
         return (self.x,self.y,self.colormap,self.listaLeyendas)
@@ -309,6 +288,7 @@ class Algoritmo:
         self.k=0
         self.clasesCalculadas.clear()
 
+    #Genera el Grafico de Barras con los aciertos por cada K analizado para Knn Estandar.
     def graficarBarras(self):
         listaAciertos=[]
         listaDeKs=[]
@@ -323,6 +303,7 @@ class Algoritmo:
             colores.append('red')
         return (listaAciertos,listaDeKs,colores)
 
+    #Genera el Grafico de Barras con los aciertos por cada K analizado para Knn Ponderado.
     def graficarBarrasKnnPonderado(self):
         listaAciertos=[]
         listaDeKs=[]
