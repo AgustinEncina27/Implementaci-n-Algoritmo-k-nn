@@ -1,27 +1,26 @@
 import sys
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog
-from PyQt5 import sip
 from Ui_Interfaz_Principal import Ui_MainWindow
 from Ui_Interfaz_k import Ui_Form2
 from Ui_Interfaz_Grafica import Ui_Form3
 from Ui_Interfaz_Grafica_K_optimo import Ui_Form4
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolBar
-from PyQt5 import QtCore
 import matplotlib.pyplot as plt
 from Controlador import Controlador
-from PyQt5 import sip
 import ctypes
 
 
 class MainWindow(QMainWindow):
+    #Construtor de la clase MainWindow
     def __init__(self):
         super(MainWindow,self).__init__()
         view = Ui_MainWindow()
         view.setupUi(self)
         view.Analizar_Dataset.triggered.connect(self.cambiar_A_Interfaz_opcion)
     
+    #Cambia a la interfaz donde buscas el Dataset
     def cambiar_A_Interfaz_opcion(self):
         interfaz_k=Interfaz_k()
         widget.addWidget(interfaz_k)
@@ -38,6 +37,7 @@ class MainWindow(QMainWindow):
 
 #-------------------------------------------------------------------------
 class Interfaz_k(QWidget):
+    #Construtor de la clase Interfaz_k
     def __init__(self):
         super(Interfaz_k,self).__init__()
         self.view = Ui_Form2()
@@ -47,10 +47,12 @@ class Interfaz_k(QWidget):
         self.view.pushButton_3.clicked.connect(self.cambiar_A_Interfaz_Principal)
         self.view.pushButton_4.clicked.connect(self.cambiar_A_Interfaz_opcion)
 
+    #Busca archivos .csv
     def buscar_Dataset(self):
         self.fname=QFileDialog.getOpenFileName(self,'Open File','E:','Archivo CSV(*.csv)')
         self.view.lineEdit_4.setText(self.fname[0])
 
+    #Cambia a la interfaz principal
     def cambiar_A_Interfaz_Principal(self):
         self.limpiarComponentes()
         widget.setCurrentWidget(principal)
@@ -63,6 +65,7 @@ class Interfaz_k(QWidget):
         widget.setFixedHeight(230)
         widget.move(int(left),int(top))    
 
+    #Cambia a la interfaz donde se representan los datos del dataset seleccionado
     def cambiar_A_Interfaz_opcion(self):
         if(not self.view.lineEdit_4.text()):
             QtWidgets.QMessageBox.critical(self, "error", "Ingrese todos los campos por favor")
@@ -81,11 +84,13 @@ class Interfaz_k(QWidget):
             widget.setFixedHeight(560)
             widget.move(int(left),int(top))    
     
+    #Reinicia los componentes
     def limpiarComponentes(self):
         self.view.lineEdit_4.setText("")
 
 #-------------------------------------------------------------------------     
 class Interfaz_Grafica(QWidget):
+    #Construtor de la clase Interfaz_Grafica
     def __init__(self):
         super(Interfaz_Grafica,self).__init__()
         self.view = Ui_Form3()
@@ -118,6 +123,7 @@ class Interfaz_Grafica(QWidget):
         self.view.grafica1.addWidget(self.navigrafica1)
         self.view.grafica2.addWidget(self.navigrafica2)
     
+    #Establece los parametros de los gráficos así se grafica en la interfaz
     def cambiarGrafico(self):
         self.grafica1.ax.clear()
         x, y, colormap, listaLeyendas = control.mostrarResultadoAlgoritmo(self.size)
@@ -142,19 +148,17 @@ class Interfaz_Grafica(QWidget):
         self.grafica2.ax.axis('equal')
         self.grafica2.draw()
         control.algoritmo.limpiarVariables()
-        #if(self.contador!=0):
-            #QtWidgets.QMessageBox.information(self, "Atención", "Se ha actualizado el gráfico")  
+        if(self.contador!=0):
+            QtWidgets.QMessageBox.information(self, "Atención", "Se han actualizado los gráficos")  
         if(self.contador==0):
             self.contador=1
          
-        
-        
-
-    
+    #Cambia el valor del label que muestra el K con respecto al slide
     def cambiarValor(self):
         self.size=self.view.horizontalSlider.value()
         self.view.mostrarK.setText(str(self.size))
 
+    #Cambia a la interfaz principal
     def cambiar_A_Interfaz_Principal(self):
         pantalla1=widget.widget(self.pantalla_grafico)
         pantalla2=widget.widget(self.pantalla_k)
@@ -170,6 +174,7 @@ class Interfaz_Grafica(QWidget):
         widget.setFixedHeight(230)
         widget.move(int(left),int(top))
     
+    #Cambia a la interfaz donde se muestra un grafico evolutivo de los k
     def cambiar_A_Interfaz_Grafica_K_optimo(self):
         widget.setCurrentIndex(self.pantalla_k)
         resolucion=ctypes.windll.user32
@@ -184,6 +189,7 @@ class Interfaz_Grafica(QWidget):
 #------------------------------------------------------------------------- 
 
 class Interfaz_Grafica_K_Optimo(QWidget):
+    #Construtor de la clase Interfaz_Grafica_K_Optimo
     def __init__(self,pantallaAnterior):
         super(Interfaz_Grafica_K_Optimo,self).__init__()
         self.view = Ui_Form4()
@@ -220,7 +226,7 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         self.view.grafica1.addWidget(self.navigrafica1)
         self.view.grafica2.addWidget(self.navigrafica2)
     
-
+    #Vuelve a la interfaz donde se encuentra representado los datos del Dataset
     def cambiar_A_Interfaz_Grafica(self):
         widget.setCurrentIndex(self.pantallaAnterior)
         resolucion=ctypes.windll.user32
@@ -235,12 +241,14 @@ class Interfaz_Grafica_K_Optimo(QWidget):
 #------------------------------------------------------------------------- 
 
 class Canvas_grafica(FigureCanvas):
+    #Construtor de la clase Canvas_grafica.Creacion del grafico
     def __init__(self):
         self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
             sharey=True, facecolor='white')
         super().__init__(self.fig)
 
 class Canvas_grafica_Barras(FigureCanvas):
+    #Construtor de la clase Canvas_grafica_Barras.Creacion del grafico de barras
     def __init__(self, listaAciertos, listaDeKs, colores, parent=None):
         self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
             sharey=True, facecolor='white')
@@ -253,27 +261,27 @@ class Canvas_grafica_Barras(FigureCanvas):
         self.ax.set_ylabel('Cantidad de aciertos')
 
 
+#Inicializa la APP
+if __name__ == '__main__':
+    app= QApplication(sys.argv)
+    widget=QtWidgets.QStackedWidget()
+    widget.setWindowTitle("Algoritmo K-nn")
+    control=Controlador()
+    principal = MainWindow()
+    widget.addWidget(principal)
+    widget.setCurrentWidget(principal)
+    resolucion=ctypes.windll.user32
+    resolucion_ancho=resolucion.GetSystemMetrics(0)
+    resolucion_alto=resolucion.GetSystemMetrics(1)
+    left=(resolucion_ancho/2)-(579/2)
+    top=(resolucion_alto/2)-(230/2)
+    widget.setFixedWidth(579)
+    widget.setFixedHeight(230)
+    widget.move(int(left),int(top))
+    widget.show()
 
-#if __name__ == '__main__':
-app= QApplication(sys.argv)
-widget=QtWidgets.QStackedWidget()
-widget.setWindowTitle("Algoritmo K-nn")
-control=Controlador()
-principal = MainWindow()
-widget.addWidget(principal)
-widget.setCurrentWidget(principal)
-resolucion=ctypes.windll.user32
-resolucion_ancho=resolucion.GetSystemMetrics(0)
-resolucion_alto=resolucion.GetSystemMetrics(1)
-left=(resolucion_ancho/2)-(579/2)
-top=(resolucion_alto/2)-(230/2)
-widget.setFixedWidth(579)
-widget.setFixedHeight(230)
-widget.move(int(left),int(top))
-widget.show()
 
-
-try:
-    sys.exit(app.exec_())
-except:
-    print("Ya existe")
+    try:
+        sys.exit(app.exec_())
+    except:
+        print("Ya existe")
