@@ -103,6 +103,7 @@ class Interfaz_Grafica(QWidget):
         Interfaz_Grafica_K_Optim=Interfaz_Grafica_K_Optimo(self.pantalla_grafico+2)
         widget.addWidget(Interfaz_Grafica_K_Optim)
         self.pantalla_k=widget.indexOf(Interfaz_Grafica_K_Optim)
+        
 
         self.view.pushButton.clicked.connect(self.cambiarGrafico)
         self.view.pushButton_2.clicked.connect(self.cambiar_A_Interfaz_Principal)
@@ -118,6 +119,7 @@ class Interfaz_Grafica(QWidget):
         self.navigrafica1=NavigationToolBar(self.grafica1,self)
         self.navigrafica2=NavigationToolBar(self.grafica2,self)
 
+
         self.view.grafica1.addWidget(self.grafica1)
         self.view.grafica2.addWidget(self.grafica2)
         self.view.grafica1.addWidget(self.navigrafica1)
@@ -127,6 +129,7 @@ class Interfaz_Grafica(QWidget):
     def cambiarGrafico(self):
         self.grafica1.ax.clear()
         x, y, colormap, listaLeyendas = control.mostrarResultadoAlgoritmo(self.size)
+        textoKnn, textoKnnPonderado=control.obtenerAciertosYErroresK(self.view.horizontalSlider.value())
         self.grafica1.ax.scatter(x, y, c=colormap, s=7)
         self.grafica1.ax.axvline(x=0, c="black")
         self.grafica1.ax.axhline(y=0, c="black")
@@ -135,6 +138,7 @@ class Interfaz_Grafica(QWidget):
         self.grafica1.ax.legend(handles=listaLeyendas, fontsize='x-small', loc=2)
         self.grafica1.ax.axis('equal')
         self.grafica1.draw()
+        self.view.plainTextEdit.setPlainText(textoKnn)
         control.algoritmo.limpiarVariables()
 
         self.grafica2.ax.clear()
@@ -147,6 +151,7 @@ class Interfaz_Grafica(QWidget):
         self.grafica2.ax.legend(handles=listaLeyendasPonderado, fontsize='x-small', loc=2)
         self.grafica2.ax.axis('equal')
         self.grafica2.draw()
+        self.view.plainTextEdit_2.setPlainText(textoKnnPonderado)
         control.algoritmo.limpiarVariables()
         if(self.contador!=0):
             QtWidgets.QMessageBox.information(self, "Atención", "Se han actualizado los gráficos")  
@@ -196,27 +201,37 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         self.view.setupUi(self)
         self.view.pushButton_2.clicked.connect(self.cambiar_A_Interfaz_Grafica)
         self.pantallaAnterior=pantallaAnterior
-        listaAciertos, listaDeKs, colores, listaAciertosClase0, listaAciertosClase1, listaAciertosClase2 = control.mostrarGraficoBarras()
+        listaAciertos, listaDeKs, colores = control.mostrarGraficoBarras()
         mayor=0
         indice=0
+        mayorEnRango=0
+        indiceEnRango=0
         for n in listaAciertos:
             if(n>=mayor):
                 mayor=n
                 indice=listaAciertos.index(n)
+            if(indice<15):
+                mayorEnRango=mayor
+                indiceEnRango=listaAciertos.index(mayorEnRango)
         a=str(listaDeKs[indice])
+        b=str(listaDeKs[indiceEnRango])
         _translate = QtCore.QCoreApplication.translate
-        self.view.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo sin ponderación="+a+"</span></p></body></html>"))
+        self.view.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo sin ponderación="+a+"<br>K optimo entre 1-15="+b+"</span></p></body></html>"))
 
         self.grafica1=Canvas_grafica_Barras(listaAciertos, listaDeKs, colores)
-        listaAciertosPonderado, listaDeKsPonderado, coloresPonderado, listaAciertosClase0Ponderado, listaAciertosClase1Ponderado, listaAciertosClase2Ponderado = control.mostrarGraficoBarrasPonderado()
+        listaAciertosPonderado, listaDeKsPonderado, coloresPonderado= control.mostrarGraficoBarrasPonderado()
         mayor=0
         indice=0
         for n in listaAciertosPonderado:
             if(n>=mayor):
                 mayor=n
                 indice=listaAciertosPonderado.index(n)
+            if(indice<15):
+                mayorEnRango=mayor
+                indiceEnRango=listaAciertosPonderado.index(mayorEnRango)
         a=str(listaDeKsPonderado[indice])
-        self.view.label_2.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo con ponderación="+a+"</span></p></body></html>"))
+        b=str(listaDeKsPonderado[indiceEnRango])
+        self.view.label_2.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo con ponderación="+a+"<br>K optimo entre 1-15="+b+"</span></p></body></html>"))
         self.grafica2=Canvas_grafica_Barras(listaAciertosPonderado, listaDeKsPonderado, coloresPonderado)
         self.navigrafica1=NavigationToolBar(self.grafica1,self)
         self.navigrafica2=NavigationToolBar(self.grafica2,self)

@@ -27,6 +27,7 @@ class Algoritmo:
         self.contadorClase2=0
         self.contadorClase0=0
         self.listaAciertosXClases=[]
+        self.listaAciertosXClasesPonderado=[]
 
     def limpiarDatos(self):
         self.x = []
@@ -96,7 +97,6 @@ class Algoritmo:
         max_value = max(self.listaK)
         kOptimos = self.find_indices(self.listaK,max_value)
         print('Maximum value:', max_value, "At index:", self.listaK.index(max_value)+1)
-        print(len(self.listaK))
         return self.listaK.index(max_value)+1
 
     #Funcion para calcular el K optimo de Knn ponderado
@@ -108,9 +108,9 @@ class Algoritmo:
             vecinos={}
             self.cantClases.append(vecinos)
         bandera=False
-        self.listaAciertosXClases.clear()
+        self.listaAciertosXClasesPonderado.clear()
         for a in range(600):
-            self.listaAciertosXClases.append([0,0,0,0,0,0])
+            self.listaAciertosXClasesPonderado.append([0,0,0,0,0,0])
         for i in range(1,self.contador-1):
             self.k=i
             for fila in range(self.contador-1):
@@ -125,15 +125,15 @@ class Algoritmo:
                 if(resultadoClase[0][0]==self.clase[fila] and bandera):
                     self.listaKPonderado[i-1] = self.listaKPonderado[i-1] + 1
                     if(self.clase[fila]==0):
-                        self.listaAciertosXClases[self.k-1][0]+=1
+                        self.listaAciertosXClasesPonderado[self.k-1][0]+=1
                     if(self.clase[fila]==1):
-                        self.listaAciertosXClases[self.k-1][2]+=1
+                        self.listaAciertosXClasesPonderado[self.k-1][2]+=1
                     if(self.clase[fila]==2):
-                        self.listaAciertosXClases[self.k-1][4]+=1
+                        self.listaAciertosXClasesPonderado[self.k-1][4]+=1
                 bandera=False
-            self.listaAciertosXClases[self.k-1][1]=self.contadorClase0-self.listaAciertosXClases[self.k-1][0]
-            self.listaAciertosXClases[self.k-1][3]=self.contadorClase1-self.listaAciertosXClases[self.k-1][2]
-            self.listaAciertosXClases[self.k-1][5]=self.contadorClase2-self.listaAciertosXClases[self.k-1][4]
+            self.listaAciertosXClasesPonderado[self.k-1][1]=self.contadorClase0-self.listaAciertosXClasesPonderado[self.k-1][0]
+            self.listaAciertosXClasesPonderado[self.k-1][3]=self.contadorClase1-self.listaAciertosXClasesPonderado[self.k-1][2]
+            self.listaAciertosXClasesPonderado[self.k-1][5]=self.contadorClase2-self.listaAciertosXClasesPonderado[self.k-1][4]
         max_value = max(self.listaKPonderado)
         kOptimos = self.find_indices(self.listaKPonderado,max_value)
         print('Maximum value:', max_value, "At index:", self.listaKPonderado.index(max_value)+1)
@@ -303,45 +303,38 @@ class Algoritmo:
         listaAciertos=[]
         listaDeKs=[]
         colores=[]
-        listaAciertosClase0=[]
-        listaAciertosClase1=[]
-        listaAciertosClase2=[]
         for a in range(15):
             listaAciertos.append(self.listaK[a])
-            listaAciertosClase0.append(self.listaAciertosXClases[a][0])
-            listaAciertosClase1.append(self.listaAciertosXClases[a][2])
-            listaAciertosClase2.append(self.listaAciertosXClases[a][4])
             listaDeKs.append(str(a+1))
             colores.append('red')
         if(self.listaK.index(max(self.listaK))>14):
             listaAciertos.append(max(self.listaK))
-            listaAciertosClase0.append(self.listaAciertosXClases[max(self.listaK)][0])
-            listaAciertosClase1.append(self.listaAciertosXClases[max(self.listaK)][2])
-            listaAciertosClase2.append(self.listaAciertosXClases[max(self.listaK)][4])
             listaDeKs.append(str(self.listaK.index(max(self.listaK))+1))
             colores.append('red')
-        return (listaAciertos,listaDeKs,colores,listaAciertosClase0,listaAciertosClase1,listaAciertosClase2)
+        return (listaAciertos,listaDeKs,colores)
 
     #Genera el Grafico de Barras con los aciertos por cada K analizado para Knn Ponderado.
     def graficarBarrasKnnPonderado(self):
         listaAciertos=[]
         listaDeKs=[]
         colores=[]
-        listaAciertosClase0=[]
-        listaAciertosClase1=[]
-        listaAciertosClase2=[]
         for a in range(15):
             listaAciertos.append(self.listaKPonderado[a])
-            listaAciertosClase0.append(self.listaAciertosXClases[a][0])
-            listaAciertosClase1.append(self.listaAciertosXClases[a][2])
-            listaAciertosClase2.append(self.listaAciertosXClases[a][4])
             listaDeKs.append(str(a+1))
             colores.append('red')
         if(self.listaKPonderado.index(max(self.listaKPonderado))>14):
             listaAciertos.append(max(self.listaKPonderado))
-            listaAciertosClase0.append(self.listaAciertosXClases[max(self.listaK)][0])
-            listaAciertosClase1.append(self.listaAciertosXClases[max(self.listaK)][2])
-            listaAciertosClase2.append(self.listaAciertosXClases[max(self.listaK)][4])
             listaDeKs.append(str(self.listaKPonderado.index(max(self.listaKPonderado))+1))
             colores.append('red')
-        return (listaAciertos,listaDeKs,colores,listaAciertosClase0,listaAciertosClase1,listaAciertosClase2)
+        return (listaAciertos,listaDeKs,colores)
+
+    #Genera el texto de los aciertos y errores en el calculo del algoritmo para un K en especifico
+    def obtenerAciertosYErroresK(self,k):
+        textoKnn=f'Para k={k}: '
+        textoKnnPonderado=f'Para k={k}: '
+        for a in range(3):
+            if({self.listaAciertosXClases[k-1][a]}!=0 and {self.listaAciertosXClases[k-1][a+1]}!=0):
+                textoKnn=textoKnn + f"\nClase {a} \nAciertos: {self.listaAciertosXClases[k-1][a]}. \nErrores: {self.listaAciertosXClases[k-1][a+1]}.\n"
+            if({self.listaAciertosXClasesPonderado[k-1][a]}!=0 and {self.listaAciertosXClasesPonderado[k-1][a+1]}!=0):
+                textoKnnPonderado=textoKnnPonderado + f"\nClase {a} \nAciertos: {self.listaAciertosXClasesPonderado[k-1][a]}. \nErrores: {self.listaAciertosXClasesPonderado[k-1][a+1]}.\n"
+        return textoKnn, textoKnnPonderado

@@ -52,4 +52,7 @@ class Controlador():
 
     def mostrarGraficoBarrasPonderado(self):
         return self.algoritmo.graficarBarrasKnnPonderado()
+  
+    def obtenerAciertosYErroresK(self,k):
+        return self.algoritmo.obtenerAciertosYErroresK(k)
         
