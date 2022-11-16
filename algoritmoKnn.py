@@ -333,8 +333,8 @@ class Algoritmo:
         textoKnn=f'Para k={k}: '
         textoKnnPonderado=f'Para k={k}: '
         for a in range(3):
-            if({self.listaAciertosXClases[k-1][a]}!=0 and {self.listaAciertosXClases[k-1][a+1]}!=0):
+            if({self.listaAciertosXClases[k-1][a]}==0 and {self.listaAciertosXClases[k-1][a+1]}==0):
                 textoKnn=textoKnn + f"\nClase {a} \nAciertos: {self.listaAciertosXClases[k-1][a]}. \nErrores: {self.listaAciertosXClases[k-1][a+1]}.\n"
-            if({self.listaAciertosXClasesPonderado[k-1][a]}!=0 and {self.listaAciertosXClasesPonderado[k-1][a+1]}!=0):
+            if({self.listaAciertosXClasesPonderado[k-1][a]}==0 and {self.listaAciertosXClasesPonderado[k-1][a+1]}==0):
                 textoKnnPonderado=textoKnnPonderado + f"\nClase {a} \nAciertos: {self.listaAciertosXClasesPonderado[k-1][a]}. \nErrores: {self.listaAciertosXClasesPonderado[k-1][a+1]}.\n"
         return textoKnn, textoKnnPonderado

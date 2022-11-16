@@ -59,10 +59,10 @@ class Interfaz_k(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(579/2)
-        top=(resolucion_alto/2)-(230/2)
-        widget.setFixedWidth(579)
-        widget.setFixedHeight(230)
+        left=(resolucion_ancho/2)-(911/2)
+        top=(resolucion_alto/2)-(531/2)
+        widget.setFixedWidth(911)
+        widget.setFixedHeight(531)
         widget.move(int(left),int(top))    
 
     #Cambia a la interfaz donde se representan los datos del dataset seleccionado
@@ -173,10 +173,10 @@ class Interfaz_Grafica(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(579/2)
-        top=(resolucion_alto/2)-(230/2)
-        widget.setFixedWidth(579)
-        widget.setFixedHeight(230)
+        left=(resolucion_ancho/2)-(911/2)
+        top=(resolucion_alto/2)-(531/2)
+        widget.setFixedWidth(911)
+        widget.setFixedHeight(531)
         widget.move(int(left),int(top))
     
     #Cambia a la interfaz donde se muestra un grafico evolutivo de los k
@@ -288,10 +288,10 @@ if __name__ == '__main__':
     resolucion=ctypes.windll.user32
     resolucion_ancho=resolucion.GetSystemMetrics(0)
     resolucion_alto=resolucion.GetSystemMetrics(1)
-    left=(resolucion_ancho/2)-(579/2)
-    top=(resolucion_alto/2)-(230/2)
-    widget.setFixedWidth(579)
-    widget.setFixedHeight(230)
+    left=(resolucion_ancho/2)-(911/2)
+    top=(resolucion_alto/2)-(531/2)
+    widget.setFixedWidth(911)
+    widget.setFixedHeight(531)
     widget.move(int(left),int(top))
     widget.show()
 

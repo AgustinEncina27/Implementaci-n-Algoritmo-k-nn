@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
-    <height>230</height>
+    <width>911</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,7 +26,7 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,9">
     <item>
      <widget class="QLabel" name="label">
       <property name="font">
@@ -49,7 +49,7 @@
     <item>
      <widget class="QLabel" name="label_2">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;GUÍA DEL USUARIO&lt;/p&gt;&lt;p&gt;En la esquina superior izquierda se encuentra el menú con las distintas funcionalidades que posee esta aplicación.&lt;/p&gt;&lt;p&gt;1-Pestaña de &amp;quot;Algoritmo k-nn&amp;quot;:&lt;/p&gt;&lt;p&gt;1.1-Pestaña &amp;quot;Analizar Dataset&amp;quot;:Al presionar esta pestaña se trasladará a la interfaz donde siguiendo los pasos podrá &lt;br/&gt;implementar el Algoritmo k-nn.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;GUÍA DEL USUARIO&lt;/p&gt;&lt;p&gt;En la esquina superior izquierda se encuentra el menú con las distintas funcionalidades que posee esta aplicación.&lt;/p&gt;&lt;p&gt;1-Interfaz &amp;quot;Principal&amp;quot;&lt;/p&gt;&lt;p&gt;1.1-Pestaña de &amp;quot;Algoritmo k-nn&amp;quot;:&lt;/p&gt;&lt;p&gt;1.1.1-Pestaña &amp;quot;Analizar Dataset&amp;quot;:Al presionar esta pestaña se trasladará a la interfaz &amp;quot;Buscar Dataset&amp;quot;.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;2-Interfaz &amp;quot;Buscar DataSet&amp;quot;:&lt;/p&gt;&lt;p&gt;2.1-El botón &amp;quot;Volver al inicio&amp;quot; regresa a la Interfaz Principal.&lt;/p&gt;&lt;p&gt;2.2-El botón &amp;quot;Buscar DataSet&amp;quot; le abrirá un buscador en donde tendrá que buscar y seleccionar un DataSet que deseé analizar.&lt;/p&gt;&lt;p&gt;2.2.1-Luego de seleccionar el DataSet oprimir el botón &amp;quot;Siguiente&amp;quot; para pasar a la Interfaz &amp;quot;Análisis de K-nn&amp;quot; en donde se analizará el DataSet seleccionado.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;3-Interfaz &amp;quot;Análisis de K-nn&amp;quot;:&lt;/p&gt;&lt;p&gt;3.1-Se encuentra un slide y un botón llamado &amp;quot;Aplicar k&amp;quot; para seleccionar el K entre 1 al 15 y mostrar un gráfico donde se visualiza la selección de clases de cada dato del DataSet elegido.&lt;/p&gt;&lt;p&gt;3.2-El botón &amp;quot;Mostrar K óptimo&amp;quot; permite trasladarse a la Interfaz &amp;quot;Mostrar K óptimo&amp;quot; en donde se mostrar los aciertos de los k entre 1 al 15 y el óptimo.&lt;/p&gt;&lt;p&gt;3.3-El botón &amp;quot;Volver al inicio&amp;quot; regresa a la Interfaz Principal.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;4-Interfaz &amp;quot;Mostrar K óptimo&amp;quot;&lt;/p&gt;&lt;p&gt;4.1-El botón &amp;quot;Volver&amp;quot; regresa a la Interfaz &amp;quot;Análisis de K-nn&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -63,7 +63,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>579</width>
+     <width>911</width>
      <height>21</height>
     </rect>
    </property>
