@@ -332,9 +332,13 @@ class Algoritmo:
     def obtenerAciertosYErroresK(self,k):
         textoKnn=f'Para k={k}: '
         textoKnnPonderado=f'Para k={k}: '
-        for a in range(3):
-            if({self.listaAciertosXClases[k-1][a]}==0 and {self.listaAciertosXClases[k-1][a+1]}==0):
-                textoKnn=textoKnn + f"\nClase {a} \nAciertos: {self.listaAciertosXClases[k-1][a]}. \nErrores: {self.listaAciertosXClases[k-1][a+1]}.\n"
-            if({self.listaAciertosXClasesPonderado[k-1][a]}==0 and {self.listaAciertosXClasesPonderado[k-1][a+1]}==0):
-                textoKnnPonderado=textoKnnPonderado + f"\nClase {a} \nAciertos: {self.listaAciertosXClasesPonderado[k-1][a]}. \nErrores: {self.listaAciertosXClasesPonderado[k-1][a+1]}.\n"
+        contador=0
+        for a in [0,2,4]:
+            clases=[0,1,2]
+            if(self.listaAciertosXClases[k-1][a]!=0 and self.listaAciertosXClases[k-1][a+1]!=0):
+                print(f"{self.listaAciertosXClases[k-1][a]} aa {self.listaAciertosXClases[k-1][a+1]}")
+                textoKnn=textoKnn + f"\nClase {clases[contador]} \nAciertos: {self.listaAciertosXClases[k-1][a]}. \nErrores: {self.listaAciertosXClases[k-1][a+1]}.\n"
+            if(self.listaAciertosXClasesPonderado[k-1][a]!=0 and self.listaAciertosXClasesPonderado[k-1][a+1]!=0):
+                textoKnnPonderado=textoKnnPonderado + f"\nClase {clases[contador]} \nAciertos: {self.listaAciertosXClasesPonderado[k-1][a]}. \nErrores: {self.listaAciertosXClasesPonderado[k-1][a+1]}.\n"
+            contador+=1
         return textoKnn, textoKnnPonderado
