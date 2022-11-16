@@ -96,6 +96,7 @@ class Algoritmo:
         max_value = max(self.listaK)
         kOptimos = self.find_indices(self.listaK,max_value)
         print('Maximum value:', max_value, "At index:", self.listaK.index(max_value)+1)
+        print(len(self.listaK))
         return self.listaK.index(max_value)+1
 
     #Funcion para calcular el K optimo de Knn ponderado
@@ -172,9 +173,12 @@ class Algoritmo:
         self.colormap.clear()
         self.listaLeyendas.clear()
         contador=0
-        leyendaRoja=Line2D([0], [0], marker='o', color='w', label='Clase 0', markerfacecolor='red', markersize=12)
-        leyendaVerde=Line2D([0], [0], marker='o', color='w', label='Clase 1', markerfacecolor='green',markersize=12)
-        leyendaAzul=Line2D([0], [0], marker='o', color='w', label='Clase 2', markerfacecolor='blue',markersize=12)
+        leyendaRoja=Line2D([0], [0], marker='o', color='w', label='Clase 0', markerfacecolor='red', markersize=6)
+        leyendaVerde=Line2D([0], [0], marker='o', color='w', label='Clase 1', markerfacecolor='green',markersize=6)
+        leyendaAzul=Line2D([0], [0], marker='o', color='w', label='Clase 2', markerfacecolor='blue',markersize=6)
+        leyendaCoral=Line2D([0], [0], marker='o', color='w', label='Error Clase 0', markerfacecolor='lightcoral',markersize=6)
+        leyendaVerdeClaro=Line2D([0], [0], marker='o', color='w', label='Error Clase 1', markerfacecolor='lightgreen',markersize=6)
+        leyendaCyan=Line2D([0], [0], marker='o', color='w', label='Error Clase 2', markerfacecolor='cyan',markersize=6)
         for color in self.clase:
             if(color==0):
                 if(self.clasesCalculadas[contador]==0):
@@ -183,6 +187,8 @@ class Algoritmo:
                         self.listaLeyendas.append(leyendaRoja)
                 else:
                     self.colormap.append('lightcoral')
+                    if(leyendaCoral not in self.listaLeyendas):
+                        self.listaLeyendas.append(leyendaCoral)
             if(color==1):
                 if(self.clasesCalculadas[contador]==1):
                     self.colormap.append('g')
@@ -190,6 +196,8 @@ class Algoritmo:
                         self.listaLeyendas.append(leyendaVerde)
                 else:
                     self.colormap.append('lightgreen')
+                    if(leyendaVerdeClaro not in self.listaLeyendas):
+                        self.listaLeyendas.append(leyendaVerdeClaro)
             if(color==2):
                 if(self.clasesCalculadas[contador]==2):
                     self.colormap.append('b')
@@ -197,6 +205,8 @@ class Algoritmo:
                         self.listaLeyendas.append(leyendaAzul)
                 else:
                     self.colormap.append('cyan')
+                    if(leyendaCyan not in self.listaLeyendas and leyendaAzul in self.listaLeyendas):
+                        self.listaLeyendas.append(leyendaCyan)
             contador+=1
 
     #Define el atributo K
@@ -293,27 +303,45 @@ class Algoritmo:
         listaAciertos=[]
         listaDeKs=[]
         colores=[]
+        listaAciertosClase0=[]
+        listaAciertosClase1=[]
+        listaAciertosClase2=[]
         for a in range(15):
             listaAciertos.append(self.listaK[a])
+            listaAciertosClase0.append(self.listaAciertosXClases[a][0])
+            listaAciertosClase1.append(self.listaAciertosXClases[a][2])
+            listaAciertosClase2.append(self.listaAciertosXClases[a][4])
             listaDeKs.append(str(a+1))
             colores.append('red')
         if(self.listaK.index(max(self.listaK))>14):
             listaAciertos.append(max(self.listaK))
+            listaAciertosClase0.append(self.listaAciertosXClases[max(self.listaK)][0])
+            listaAciertosClase1.append(self.listaAciertosXClases[max(self.listaK)][2])
+            listaAciertosClase2.append(self.listaAciertosXClases[max(self.listaK)][4])
             listaDeKs.append(str(self.listaK.index(max(self.listaK))+1))
             colores.append('red')
-        return (listaAciertos,listaDeKs,colores)
+        return (listaAciertos,listaDeKs,colores,listaAciertosClase0,listaAciertosClase1,listaAciertosClase2)
 
     #Genera el Grafico de Barras con los aciertos por cada K analizado para Knn Ponderado.
     def graficarBarrasKnnPonderado(self):
         listaAciertos=[]
         listaDeKs=[]
         colores=[]
+        listaAciertosClase0=[]
+        listaAciertosClase1=[]
+        listaAciertosClase2=[]
         for a in range(15):
             listaAciertos.append(self.listaKPonderado[a])
+            listaAciertosClase0.append(self.listaAciertosXClases[a][0])
+            listaAciertosClase1.append(self.listaAciertosXClases[a][2])
+            listaAciertosClase2.append(self.listaAciertosXClases[a][4])
             listaDeKs.append(str(a+1))
             colores.append('red')
         if(self.listaKPonderado.index(max(self.listaKPonderado))>14):
             listaAciertos.append(max(self.listaKPonderado))
+            listaAciertosClase0.append(self.listaAciertosXClases[max(self.listaK)][0])
+            listaAciertosClase1.append(self.listaAciertosXClases[max(self.listaK)][2])
+            listaAciertosClase2.append(self.listaAciertosXClases[max(self.listaK)][4])
             listaDeKs.append(str(self.listaKPonderado.index(max(self.listaKPonderado))+1))
             colores.append('red')
-        return (listaAciertos,listaDeKs,colores)
+        return (listaAciertos,listaDeKs,colores,listaAciertosClase0,listaAciertosClase1,listaAciertosClase2)

@@ -132,7 +132,7 @@ class Interfaz_Grafica(QWidget):
         self.grafica1.ax.axhline(y=0, c="black")
         self.grafica1.ax.set_xlabel('Eje X')
         self.grafica1.ax.set_ylabel('Eje Y')
-        self.grafica1.ax.legend(handles=listaLeyendas)
+        self.grafica1.ax.legend(handles=listaLeyendas, fontsize='x-small', loc=2)
         self.grafica1.ax.axis('equal')
         self.grafica1.draw()
         control.algoritmo.limpiarVariables()
@@ -144,7 +144,7 @@ class Interfaz_Grafica(QWidget):
         self.grafica2.ax.axhline(y=0, c="black")
         self.grafica2.ax.set_xlabel('Eje X')
         self.grafica2.ax.set_ylabel('Eje Y')
-        self.grafica2.ax.legend(handles=listaLeyendasPonderado)
+        self.grafica2.ax.legend(handles=listaLeyendasPonderado, fontsize='x-small', loc=2)
         self.grafica2.ax.axis('equal')
         self.grafica2.draw()
         control.algoritmo.limpiarVariables()
@@ -196,7 +196,7 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         self.view.setupUi(self)
         self.view.pushButton_2.clicked.connect(self.cambiar_A_Interfaz_Grafica)
         self.pantallaAnterior=pantallaAnterior
-        listaAciertos, listaDeKs, colores = control.mostrarGraficoBarras()
+        listaAciertos, listaDeKs, colores, listaAciertosClase0, listaAciertosClase1, listaAciertosClase2 = control.mostrarGraficoBarras()
         mayor=0
         indice=0
         for n in listaAciertos:
@@ -208,7 +208,7 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         self.view.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo sin ponderación="+a+"</span></p></body></html>"))
 
         self.grafica1=Canvas_grafica_Barras(listaAciertos, listaDeKs, colores)
-        listaAciertosPonderado, listaDeKsPonderado, coloresPonderado = control.mostrarGraficoBarrasPonderado()
+        listaAciertosPonderado, listaDeKsPonderado, coloresPonderado, listaAciertosClase0Ponderado, listaAciertosClase1Ponderado, listaAciertosClase2Ponderado = control.mostrarGraficoBarrasPonderado()
         mayor=0
         indice=0
         for n in listaAciertosPonderado:
