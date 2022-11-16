@@ -78,10 +78,10 @@ class Interfaz_k(QWidget):
             resolucion=ctypes.windll.user32
             resolucion_ancho=resolucion.GetSystemMetrics(0)
             resolucion_alto=resolucion.GetSystemMetrics(1)
-            left=(resolucion_ancho/2)-(1000/2)
-            top=(resolucion_alto/2)-(560/2)
-            widget.setFixedWidth(1000)
-            widget.setFixedHeight(560)
+            left=(resolucion_ancho/2)-(1500/2)
+            top=(resolucion_alto/2)-(620/2)
+            widget.setFixedWidth(1500)
+            widget.setFixedHeight(620)
             widget.move(int(left),int(top))    
     
     #Reinicia los componentes
@@ -180,9 +180,9 @@ class Interfaz_Grafica(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(1000/2)
+        left=(resolucion_ancho/2)-(1189/2)
         top=(resolucion_alto/2)-(560/2)
-        widget.setFixedWidth(1000)
+        widget.setFixedWidth(1189)
         widget.setFixedHeight(560)
         widget.move(int(left),int(top))
 
@@ -232,9 +232,9 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(1000/2)
+        left=(resolucion_ancho/2)-(1189/2)
         top=(resolucion_alto/2)-(560/2)
-        widget.setFixedWidth(1000)
+        widget.setFixedWidth(1189)
         widget.setFixedHeight(560)
         widget.move(int(left),int(top))
     
@@ -243,7 +243,7 @@ class Interfaz_Grafica_K_Optimo(QWidget):
 class Canvas_grafica(FigureCanvas):
     #Construtor de la clase Canvas_grafica.Creacion del grafico
     def __init__(self):
-        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
+        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(4.5, 4.5), 
             sharey=True, facecolor='white')
         super().__init__(self.fig)
 
