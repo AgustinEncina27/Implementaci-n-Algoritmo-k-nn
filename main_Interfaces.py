@@ -180,10 +180,10 @@ class Interfaz_Grafica(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(1189/2)
-        top=(resolucion_alto/2)-(560/2)
-        widget.setFixedWidth(1189)
-        widget.setFixedHeight(560)
+        left=(resolucion_ancho/2)-(1500/2)
+        top=(resolucion_alto/2)-(620/2)
+        widget.setFixedWidth(1500)
+        widget.setFixedHeight(620)
         widget.move(int(left),int(top))
 
 #------------------------------------------------------------------------- 
@@ -232,10 +232,10 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(1189/2)
-        top=(resolucion_alto/2)-(560/2)
-        widget.setFixedWidth(1189)
-        widget.setFixedHeight(560)
+        left=(resolucion_ancho/2)-(1500/2)
+        top=(resolucion_alto/2)-(620/2)
+        widget.setFixedWidth(1500)
+        widget.setFixedHeight(620)
         widget.move(int(left),int(top))
     
 #------------------------------------------------------------------------- 
