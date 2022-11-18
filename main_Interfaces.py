@@ -202,9 +202,9 @@ class Interfaz_Grafica(QWidget):
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
         left=(resolucion_ancho/2)-(1077/2)
-        top=(resolucion_alto/2)-(381/2)
+        top=(resolucion_alto/2)-(570/2)
         widget.setFixedWidth(1077)
-        widget.setFixedHeight(381)
+        widget.setFixedHeight(570)
         widget.move(int(left),int(top))
 
 #------------------------------------------------------------------------- 
@@ -281,13 +281,13 @@ class Interfaz_Grafica_Tabla(QWidget):
         self.pantallaAnterior=pantallaAnterior
         listaKTabla, listaAciertosXClaseTabla, listaKPonderadoTabla, listaAciertosXClasesPonderadoTabla = control.obtenerAciertosYErroresTabla()
         
-        #Row count
+        #Contar filas
         if(listaAciertosXClaseTabla[0][4]!=0 and listaAciertosXClaseTabla[0][4]!=0):
             self.view.tableWidget.setRowCount(12)
         else:
             self.view.tableWidget.setRowCount(8)
   
-        #Column count
+        #Contar columnas
         if(len(listaKTabla)>15):
             self.view.tableWidget.setColumnCount(16)
     
@@ -331,13 +331,13 @@ class Interfaz_Grafica_Tabla(QWidget):
 
         #-----------------------------------------------------------------------------------------------------
 
-        #Row count
+        #Contar filas
         if(listaAciertosXClasesPonderadoTabla[0][4]!=0 and listaAciertosXClasesPonderadoTabla[0][4]!=0):
             self.view.tableWidget_2.setRowCount(12)
         else:
             self.view.tableWidget_2.setRowCount(8)
         
-        #Column count
+        #Contar columnas
         if(len(listaKPonderadoTabla)>15):
             self.view.tableWidget_2.setColumnCount(16)
 
