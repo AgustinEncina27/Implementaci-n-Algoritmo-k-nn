@@ -329,7 +329,7 @@ class Algoritmo:
         return (listaAciertos,listaDeKs,colores)
 
     #Genera el texto de los aciertos y errores en el calculo del algoritmo para un K en especifico
-    def obtenerAciertosYErroresK(self,k):
+    def obtenerAciertosYErroresKTexto(self,k):
         textoKnn=f'Para k={k}: '
         textoKnnPonderado=f'Para k={k}: '
         contador=0
@@ -342,3 +342,28 @@ class Algoritmo:
                 textoKnnPonderado=textoKnnPonderado + f"\nClase {clases[contador]} \nAciertos: {self.listaAciertosXClasesPonderado[k-1][a]}. \nErrores: {self.listaAciertosXClasesPonderado[k-1][a+1]}.\n"
             contador+=1
         return textoKnn, textoKnnPonderado
+    
+    def obtenerAciertosYErroresTabla(self):
+        listaKTabla=[]
+        listaAciertosXClasesTabla=[]
+        listaKPonderadoTabla=[]
+        listaAciertosXClasesPonderadoTabla=[]
+        max_value_ponderado = max(self.listaKPonderado)
+        max_value = max(self.listaK)
+        for a in range(15):
+            listaKTabla.append(a+1)
+        for b in range(15):
+            listaAciertosXClasesTabla.append(self.listaAciertosXClases[b])
+        if((self.listaK.index(max_value)+1)>1):
+            listaKTabla.append(self.listaK.index(max_value)+1)
+            listaAciertosXClasesTabla.append(self.listaAciertosXClases[self.listaK.index(max_value)])
+
+        for a in range(15):
+            listaKPonderadoTabla.append(a+1)
+        for b in range(15):
+            listaAciertosXClasesPonderadoTabla.append(self.listaAciertosXClasesPonderado[b])
+        if((self.listaKPonderado.index(max_value_ponderado)+1)>1):
+            listaKPonderadoTabla.append(self.listaKPonderado.index(max_value_ponderado)+1)
+            listaAciertosXClasesPonderadoTabla.append(self.listaAciertosXClasesPonderado[self.listaKPonderado.index(max_value_ponderado)])
+        
+        return listaKTabla, listaAciertosXClasesTabla, listaKPonderadoTabla, listaAciertosXClasesPonderadoTabla
