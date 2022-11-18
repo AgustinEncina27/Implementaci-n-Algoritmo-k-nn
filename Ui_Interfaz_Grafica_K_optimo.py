@@ -58,9 +58,13 @@ class Ui_Form4(object):
         self.frame_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_6.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_6.setObjectName("frame_6")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.frame_6)
+        self.horizontalLayout.setContentsMargins(300, -1, 9, 6)
+        self.horizontalLayout.setSpacing(15)
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.pushButton_2 = QtWidgets.QPushButton(self.frame_6)
-        self.pushButton_2.setGeometry(QtCore.QRect(410, 0, 75, 23))
         self.pushButton_2.setObjectName("pushButton_2")
+        self.horizontalLayout.addWidget(self.pushButton_2)
         self.gridLayout.addWidget(self.frame_6, 1, 1, 1, 1)
         self.gridLayout.setRowStretch(0, 17)
         self.gridLayout.setRowStretch(1, 1)
@@ -71,4 +75,6 @@ class Ui_Form4(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
+        self.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo sin ponderación</span></p></body></html>"))
+        self.label_2.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo con ponderación</span></p></body></html>"))
         self.pushButton_2.setText(_translate("Form", "Volver"))

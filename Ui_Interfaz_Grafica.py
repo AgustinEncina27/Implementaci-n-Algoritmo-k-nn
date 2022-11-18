@@ -54,6 +54,9 @@ class Ui_Form3(object):
         self.frame_6.setObjectName("frame_6")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.frame_6)
         self.horizontalLayout.setObjectName("horizontalLayout")
+        self.pushButton_4 = QtWidgets.QPushButton(self.frame_6)
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.horizontalLayout.addWidget(self.pushButton_4)
         self.pushButton_3 = QtWidgets.QPushButton(self.frame_6)
         self.pushButton_3.setObjectName("pushButton_3")
         self.horizontalLayout.addWidget(self.pushButton_3)
@@ -127,6 +130,7 @@ class Ui_Form3(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.pushButton.setText(_translate("Form", "Aplicar K"))
+        self.pushButton_4.setText(_translate("Form", "Tabla de aciertos"))
         self.pushButton_3.setText(_translate("Form", "Mostrar K óptimo"))
         self.pushButton_2.setText(_translate("Form", "Volver"))
         self.label_2.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">Algoritmo K-nn Ponderado</span></p></body></html>"))

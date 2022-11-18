@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(911, 531)
+        MainWindow.resize(1033, 620)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setStretch(1, 9)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 911, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1033, 21))
         self.menubar.setObjectName("menubar")
         self.menuAlgoritmo_K_nn = QtWidgets.QMenu(self.menubar)
         self.menuAlgoritmo_K_nn.setObjectName("menuAlgoritmo_K_nn")
@@ -66,6 +66,6 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "BIENVENIDO"))
-        self.label_2.setText(_translate("MainWindow", "<html><head/><body><p>GUÍA DEL USUARIO</p><p>En la esquina superior izquierda se encuentra el menú con las distintas funcionalidades que posee esta aplicación.</p><p>1-Interfaz &quot;Principal&quot;</p><p>1.1-Pestaña de &quot;Algoritmo k-nn&quot;:</p><p>1.1.1-Pestaña &quot;Analizar Dataset&quot;:Al presionar esta pestaña se trasladará a la interfaz &quot;Buscar Dataset&quot;.<br/></p><p>2-Interfaz &quot;Buscar DataSet&quot;:</p><p>2.1-El botón &quot;Volver al inicio&quot; regresa a la Interfaz Principal.</p><p>2.2-El botón &quot;Buscar DataSet&quot; le abrirá un buscador en donde tendrá que buscar y seleccionar un DataSet que deseé analizar.</p><p>2.2.1-Luego de seleccionar el DataSet oprimir el botón &quot;Siguiente&quot; para pasar a la Interfaz &quot;Análisis de K-nn&quot; en donde se analizará el DataSet seleccionado.<br/></p><p>3-Interfaz &quot;Análisis de K-nn&quot;:</p><p>3.1-Se encuentra un slide y un botón llamado &quot;Aplicar k&quot; para seleccionar el K entre 1 al 15 y mostrar un gráfico donde se visualiza la selección de clases de cada dato del DataSet elegido.</p><p>3.2-El botón &quot;Mostrar K óptimo&quot; permite trasladarse a la Interfaz &quot;Mostrar K óptimo&quot; en donde se mostrar los aciertos de los k entre 1 al 15 y el óptimo.</p><p>3.3-El botón &quot;Volver al inicio&quot; regresa a la Interfaz Principal.<br/></p><p>4-Interfaz &quot;Mostrar K óptimo&quot;</p><p>4.1-El botón &quot;Volver&quot; regresa a la Interfaz &quot;Análisis de K-nn&quot;.</p></body></html>"))
+        self.label_2.setText(_translate("MainWindow", "<html><head/><body><p>GUÍA DEL USUARIO</p><p>En la esquina superior izquierda se encuentra el menú con las distintas funcionalidades que posee esta aplicación.</p><p>1-Interfaz &quot;Principal&quot;</p><p>1.1-Pestaña de &quot;Algoritmo k-nn&quot;:</p><p>1.1.1-Pestaña &quot;Analizar Dataset&quot;:Al presionar esta pestaña se trasladará a la interfaz &quot;Buscar Dataset&quot;.<br/></p><p>2-Interfaz &quot;Buscar DataSet&quot;:</p><p>2.1-El botón &quot;Volver al inicio&quot; regresa a la Interfaz Principal.</p><p>2.2-El botón &quot;Buscar DataSet&quot; le abrirá un buscador en donde tendrá que buscar y seleccionar un DataSet que deseé analizar.</p><p>2.2.1-Luego de seleccionar el DataSet oprimir el botón &quot;Siguiente&quot; para pasar a la Interfaz &quot;Análisis de K-nn&quot; en donde se analizará el DataSet seleccionado.<br/></p><p>3-Interfaz &quot;Análisis de K-nn&quot;:</p><p>3.1-Se encuentra un slide y un botón llamado &quot;Aplicar k&quot; para seleccionar el K entre 1 al 15 y mostrar un gráfico donde se visualiza la selección de clases de cada dato del DataSet elegido.</p><p>3.2-El botón &quot;Mostrar K óptimo&quot; permite trasladarse a la Interfaz &quot;Mostrar K óptimo&quot; en donde se mostrar los aciertos de los k entre 1 al 15 y el óptimo.</p><p>3.3-El botón &quot;Comparación de algoritmos&quot; permite trasladarse a la interfaz &quot;Comparación de Algoritmos&quot; en donde se puede visualizar los aciertos y los errores utilizando los algoritmos para realizar la comparación.</p><p>3.4-El botón &quot;Volver al inicio&quot; regresa a la Interfaz Principal.<br/></p><p>4-Interfaz &quot;Mostrar K óptimo&quot;</p><p>4.1-El botón &quot;Volver&quot; regresa a la Interfaz &quot;Análisis de K-nn&quot;.<br/></p><p>5-Interfaz &quot;Comparación de Algoritmos&quot;</p><p>5.1-El botón &quot;Volver&quot; regresa a la Interfaz &quot;Análisis de K-nn&quot;.</p></body></html>"))
         self.menuAlgoritmo_K_nn.setTitle(_translate("MainWindow", "Algoritmo K-nn"))
         self.Analizar_Dataset.setText(_translate("MainWindow", "Analizar Dataset"))

@@ -5,6 +5,7 @@ from Ui_Interfaz_Principal import Ui_MainWindow
 from Ui_Interfaz_k import Ui_Form2
 from Ui_Interfaz_Grafica import Ui_Form3
 from Ui_Interfaz_Grafica_K_optimo import Ui_Form4
+from Ui_Interfaz_Grafica_Tabla import Ui_Form5
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolBar
 import matplotlib.pyplot as plt
@@ -59,10 +60,10 @@ class Interfaz_k(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(911/2)
-        top=(resolucion_alto/2)-(531/2)
-        widget.setFixedWidth(911)
-        widget.setFixedHeight(531)
+        left=(resolucion_ancho/2)-(1033/2)
+        top=(resolucion_alto/2)-(620/2)
+        widget.setFixedWidth(1033)
+        widget.setFixedHeight(620)
         widget.move(int(left),int(top))    
 
     #Cambia a la interfaz donde se representan los datos del dataset seleccionado
@@ -100,14 +101,18 @@ class Interfaz_Grafica(QWidget):
         control.inicilizarGraficoBarras()
         pantallaActual=widget.currentWidget()
         self.pantalla_grafico=widget.indexOf(pantallaActual)
-        Interfaz_Grafica_K_Optim=Interfaz_Grafica_K_Optimo(self.pantalla_grafico+2)
+        Interfaz_Grafica_K_Optim=Interfaz_Grafica_K_Optimo(self.pantalla_grafico+3)
         widget.addWidget(Interfaz_Grafica_K_Optim)
         self.pantalla_k=widget.indexOf(Interfaz_Grafica_K_Optim)
+        Interfaz_Grafica_Tabl=Interfaz_Grafica_Tabla(self.pantalla_grafico+3)
+        widget.addWidget(Interfaz_Grafica_Tabl)
+        self.pantalla_k2=widget.indexOf(Interfaz_Grafica_Tabl)
         
 
         self.view.pushButton.clicked.connect(self.cambiarGrafico)
         self.view.pushButton_2.clicked.connect(self.cambiar_A_Interfaz_Principal)
         self.view.pushButton_3.clicked.connect(self.cambiar_A_Interfaz_Grafica_K_optimo)
+        self.view.pushButton_4.clicked.connect(self.cambiar_A_Interfaz_Grafica_Tabla)
         
         self.view.mostrarK.setText(str(self.view.horizontalSlider.value()))
         self.view.horizontalSlider.valueChanged.connect(self.cambiarValor)
@@ -173,10 +178,10 @@ class Interfaz_Grafica(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(911/2)
-        top=(resolucion_alto/2)-(531/2)
-        widget.setFixedWidth(911)
-        widget.setFixedHeight(531)
+        left=(resolucion_ancho/2)-(1033/2)
+        top=(resolucion_alto/2)-(620/2)
+        widget.setFixedWidth(1033)
+        widget.setFixedHeight(620)
         widget.move(int(left),int(top))
     
     #Cambia a la interfaz donde se muestra un grafico evolutivo de los k
@@ -185,10 +190,21 @@ class Interfaz_Grafica(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(1500/2)
-        top=(resolucion_alto/2)-(620/2)
-        widget.setFixedWidth(1500)
-        widget.setFixedHeight(620)
+        left=(resolucion_ancho/2)-(1000/2)
+        top=(resolucion_alto/2)-(560/2)
+        widget.setFixedWidth(1000)
+        widget.setFixedHeight(560)
+        widget.move(int(left),int(top))
+    
+    def cambiar_A_Interfaz_Grafica_Tabla(self):
+        widget.setCurrentIndex(self.pantalla_k2)
+        resolucion=ctypes.windll.user32
+        resolucion_ancho=resolucion.GetSystemMetrics(0)
+        resolucion_alto=resolucion.GetSystemMetrics(1)
+        left=(resolucion_ancho/2)-(1077/2)
+        top=(resolucion_alto/2)-(381/2)
+        widget.setFixedWidth(1077)
+        widget.setFixedHeight(381)
         widget.move(int(left),int(top))
 
 #------------------------------------------------------------------------- 
@@ -255,6 +271,30 @@ class Interfaz_Grafica_K_Optimo(QWidget):
     
 #------------------------------------------------------------------------- 
 
+class Interfaz_Grafica_Tabla(QWidget):
+    #Construtor de la clase Interfaz_Grafica_K_Optimo
+    def __init__(self,pantallaAnterior):
+        super(Interfaz_Grafica_Tabla,self).__init__()
+        self.view = Ui_Form5()
+        self.view.setupUi(self)
+        self.view.pushButton.clicked.connect(self.cambiar_A_Interfaz_Grafica)
+        self.pantallaAnterior=pantallaAnterior
+             
+    
+    #Vuelve a la interfaz donde se encuentra representado los datos del Dataset
+    def cambiar_A_Interfaz_Grafica(self):
+        widget.setCurrentIndex(self.pantallaAnterior)
+        resolucion=ctypes.windll.user32
+        resolucion_ancho=resolucion.GetSystemMetrics(0)
+        resolucion_alto=resolucion.GetSystemMetrics(1)
+        left=(resolucion_ancho/2)-(1500/2)
+        top=(resolucion_alto/2)-(620/2)
+        widget.setFixedWidth(1500)
+        widget.setFixedHeight(620)
+        widget.move(int(left),int(top))
+    
+#------------------------------------------------------------------------- 
+
 class Canvas_grafica(FigureCanvas):
     #Construtor de la clase Canvas_grafica.Creacion del grafico
     def __init__(self):
@@ -288,13 +328,12 @@ if __name__ == '__main__':
     resolucion=ctypes.windll.user32
     resolucion_ancho=resolucion.GetSystemMetrics(0)
     resolucion_alto=resolucion.GetSystemMetrics(1)
-    left=(resolucion_ancho/2)-(911/2)
-    top=(resolucion_alto/2)-(531/2)
-    widget.setFixedWidth(911)
-    widget.setFixedHeight(531)
+    left=(resolucion_ancho/2)-(1033/2)
+    top=(resolucion_alto/2)-(620/2)
+    widget.setFixedWidth(1033)
+    widget.setFixedHeight(620)
     widget.move(int(left),int(top))
     widget.show()
-
 
     try:
         sys.exit(app.exec_())
