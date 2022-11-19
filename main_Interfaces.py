@@ -316,9 +316,10 @@ class Interfaz_Grafica_Tabla(QWidget):
         self.view.tableWidget.setItem(6,0, QTableWidgetItem("Aciertos"))
         self.view.tableWidget.setItem(7,0, QTableWidgetItem("Errores"))
         for a in listaKTabla:
-            self.view.tableWidget.setItem(5,a, QTableWidgetItem(f"{a}"))
             if(a>15):
                 self.view.tableWidget.setItem(5,16, QTableWidgetItem(f"{a}"))
+            else:
+                self.view.tableWidget.setItem(5,a, QTableWidgetItem(f"{a}"))
         contadorColumna=1
         for b in listaAciertosXClaseTabla:
             self.view.tableWidget.setItem(6,contadorColumna, QTableWidgetItem(f"{b[2]}"))
@@ -337,9 +338,10 @@ class Interfaz_Grafica_Tabla(QWidget):
             self.view.tableWidget.setItem(10,0, QTableWidgetItem("Aciertos"))
             self.view.tableWidget.setItem(11,0, QTableWidgetItem("Errores"))
             for a in listaKTabla:
-                self.view.tableWidget.setItem(9,a, QTableWidgetItem(f"{a}"))
                 if(a>15):
                     self.view.tableWidget.setItem(9,16, QTableWidgetItem(f"{a}"))
+                else:
+                    self.view.tableWidget.setItem(9,a, QTableWidgetItem(f"{a}"))
             contadorColumna=1
             for b in listaAciertosXClaseTabla:
                 self.view.tableWidget.setItem(10,contadorColumna, QTableWidgetItem(f"{b[4]}"))
@@ -382,9 +384,10 @@ class Interfaz_Grafica_Tabla(QWidget):
         self.view.tableWidget_2.setItem(2,0, QTableWidgetItem("Aciertos"))
         self.view.tableWidget_2.setItem(3,0, QTableWidgetItem("Errores"))
         for a in listaKPonderadoTabla:
-            self.view.tableWidget_2.setItem(1,a, QTableWidgetItem(f"{a}"))
             if(a>15):
                 self.view.tableWidget_2.setItem(1,16, QTableWidgetItem(f"{a}"))
+            else:
+                self.view.tableWidget_2.setItem(1,a, QTableWidgetItem(f"{a}"))
         contadorColumna=1
         for b in listaAciertosXClasesPonderadoTabla:
             self.view.tableWidget_2.setItem(2,contadorColumna, QTableWidgetItem(f"{b[0]}"))
@@ -396,9 +399,10 @@ class Interfaz_Grafica_Tabla(QWidget):
         self.view.tableWidget_2.setItem(7,0, QTableWidgetItem("Errores"))
 
         for a in listaKPonderadoTabla:
-            self.view.tableWidget_2.setItem(5,a, QTableWidgetItem(f"{a}"))
             if(a>15):
                 self.view.tableWidget_2.setItem(5,16, QTableWidgetItem(f"{a}"))
+            else:
+                self.view.tableWidget_2.setItem(5,a, QTableWidgetItem(f"{a}"))
         contadorColumna=1
         for b in listaAciertosXClasesPonderadoTabla:
             self.view.tableWidget_2.setItem(6,contadorColumna, QTableWidgetItem(f"{b[2]}"))
@@ -417,9 +421,10 @@ class Interfaz_Grafica_Tabla(QWidget):
             self.view.tableWidget_2.setItem(10,0, QTableWidgetItem("Aciertos"))
             self.view.tableWidget_2.setItem(11,0, QTableWidgetItem("Errores"))
             for a in listaKPonderadoTabla:
-                self.view.tableWidget_2.setItem(9,a, QTableWidgetItem(f"{a}"))
                 if(a>15):
                     self.view.tableWidget_2.setItem(9,16, QTableWidgetItem(f"{a}"))
+                else:
+                    self.view.tableWidget_2.setItem(9,a, QTableWidgetItem(f"{a}"))
             contadorColumna=1
             for b in listaAciertosXClasesPonderadoTabla:
                 self.view.tableWidget_2.setItem(10,contadorColumna, QTableWidgetItem(f"{b[4]}"))
