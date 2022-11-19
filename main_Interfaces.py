@@ -1,5 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog, QTableWidget, QTableWidgetItem, QHeaderView
 from Ui_Interfaz_Principal import Ui_MainWindow
 from Ui_Interfaz_k import Ui_Form2
@@ -279,16 +280,21 @@ class Interfaz_Grafica_Tabla(QWidget):
         self.view.setupUi(self)
         self.view.pushButton.clicked.connect(self.cambiar_A_Interfaz_Grafica)
         self.pantallaAnterior=pantallaAnterior
-        listaKTabla, listaAciertosXClaseTabla, listaKPonderadoTabla, listaAciertosXClasesPonderadoTabla = control.obtenerAciertosYErroresTabla()
+        listaKTabla, listaAciertosXClaseTabla, listaKPonderadoTabla, listaAciertosXClasesPonderadoTabla, kOptimoGlobal, kOptimoGlobalPonderado, kOptimoRango, kOptimoPonderadoRango = control.obtenerAciertosYErroresTabla()
         
-        #Contar filas
+        if(kOptimoGlobal==kOptimoRango):
+            kOptimoGlobal=-1
+        if(kOptimoGlobalPonderado==kOptimoPonderadoRango):
+            kOptimoGlobalPonderado=-1
+
         if(listaAciertosXClaseTabla[0][4]!=0 and listaAciertosXClaseTabla[0][4]!=0):
             self.view.tableWidget.setRowCount(12)
         else:
             self.view.tableWidget.setRowCount(8)
-  
-        #Contar columnas
+            
         if(len(listaKTabla)>15):
+            self.view.tableWidget.setColumnCount(17)
+        else:
             self.view.tableWidget.setColumnCount(16)
     
         self.view.tableWidget.setItem(0,0, QTableWidgetItem("Clase 0"))
@@ -296,7 +302,10 @@ class Interfaz_Grafica_Tabla(QWidget):
         self.view.tableWidget.setItem(2,0, QTableWidgetItem("Aciertos"))
         self.view.tableWidget.setItem(3,0, QTableWidgetItem("Errores"))
         for a in listaKTabla:
-            self.view.tableWidget.setItem(1,a, QTableWidgetItem(f"{a}"))
+            if(a>15):
+                self.view.tableWidget.setItem(1,16, QTableWidgetItem(f"{a}"))
+            else:
+                self.view.tableWidget.setItem(1,a, QTableWidgetItem(f"{a}"))
         contadorColumna=1
         for b in listaAciertosXClaseTabla:
             self.view.tableWidget.setItem(2,contadorColumna, QTableWidgetItem(f"{b[0]}"))
@@ -308,11 +317,20 @@ class Interfaz_Grafica_Tabla(QWidget):
         self.view.tableWidget.setItem(7,0, QTableWidgetItem("Errores"))
         for a in listaKTabla:
             self.view.tableWidget.setItem(5,a, QTableWidgetItem(f"{a}"))
+            if(a>15):
+                self.view.tableWidget.setItem(5,16, QTableWidgetItem(f"{a}"))
         contadorColumna=1
         for b in listaAciertosXClaseTabla:
             self.view.tableWidget.setItem(6,contadorColumna, QTableWidgetItem(f"{b[2]}"))
             self.view.tableWidget.setItem(7,contadorColumna, QTableWidgetItem(f"{b[3]}"))
             contadorColumna+=1
+        self.view.tableWidget.item(1, kOptimoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget.item(2, kOptimoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget.item(3, kOptimoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget.item(5, kOptimoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget.item(6, kOptimoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget.item(7, kOptimoRango).setBackground(QColor(108,187,60))
+
         if(listaAciertosXClaseTabla[0][4]!=0 and listaAciertosXClaseTabla[0][4]!=0):
             self.view.tableWidget.setItem(8,0, QTableWidgetItem("Clase 2"))
             self.view.tableWidget.setItem(9,0, QTableWidgetItem("K"))
@@ -320,11 +338,27 @@ class Interfaz_Grafica_Tabla(QWidget):
             self.view.tableWidget.setItem(11,0, QTableWidgetItem("Errores"))
             for a in listaKTabla:
                 self.view.tableWidget.setItem(9,a, QTableWidgetItem(f"{a}"))
+                if(a>15):
+                    self.view.tableWidget.setItem(9,16, QTableWidgetItem(f"{a}"))
             contadorColumna=1
             for b in listaAciertosXClaseTabla:
                 self.view.tableWidget.setItem(10,contadorColumna, QTableWidgetItem(f"{b[4]}"))
                 self.view.tableWidget.setItem(11,contadorColumna, QTableWidgetItem(f"{b[5]}"))
                 contadorColumna+=1
+            self.view.tableWidget.item(9, kOptimoRango).setBackground(QColor(108,187,60))
+            self.view.tableWidget.item(10, kOptimoRango).setBackground(QColor(108,187,60))
+            self.view.tableWidget.item(11, kOptimoRango).setBackground(QColor(108,187,60))
+        if(kOptimoGlobal!=-1):
+            self.view.tableWidget.item(1, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget.item(2, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget.item(3, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget.item(5, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget.item(6, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget.item(7, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget.item(9, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget.item(10, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget.item(11, 16).setBackground(QColor(255,181,82))
+
         
         self.view.tableWidget.verticalHeader().setVisible(False)
         self.view.tableWidget.horizontalHeader().setVisible(False)
@@ -339,6 +373,8 @@ class Interfaz_Grafica_Tabla(QWidget):
         
         #Contar columnas
         if(len(listaKPonderadoTabla)>15):
+            self.view.tableWidget_2.setColumnCount(17)
+        else:
             self.view.tableWidget_2.setColumnCount(16)
 
         self.view.tableWidget_2.setItem(0,0, QTableWidgetItem("Clase 0"))
@@ -347,6 +383,8 @@ class Interfaz_Grafica_Tabla(QWidget):
         self.view.tableWidget_2.setItem(3,0, QTableWidgetItem("Errores"))
         for a in listaKPonderadoTabla:
             self.view.tableWidget_2.setItem(1,a, QTableWidgetItem(f"{a}"))
+            if(a>15):
+                self.view.tableWidget_2.setItem(1,16, QTableWidgetItem(f"{a}"))
         contadorColumna=1
         for b in listaAciertosXClasesPonderadoTabla:
             self.view.tableWidget_2.setItem(2,contadorColumna, QTableWidgetItem(f"{b[0]}"))
@@ -356,13 +394,23 @@ class Interfaz_Grafica_Tabla(QWidget):
         self.view.tableWidget_2.setItem(5,0, QTableWidgetItem("K"))
         self.view.tableWidget_2.setItem(6,0, QTableWidgetItem("Aciertos"))
         self.view.tableWidget_2.setItem(7,0, QTableWidgetItem("Errores"))
+
         for a in listaKPonderadoTabla:
             self.view.tableWidget_2.setItem(5,a, QTableWidgetItem(f"{a}"))
+            if(a>15):
+                self.view.tableWidget_2.setItem(5,16, QTableWidgetItem(f"{a}"))
         contadorColumna=1
         for b in listaAciertosXClasesPonderadoTabla:
             self.view.tableWidget_2.setItem(6,contadorColumna, QTableWidgetItem(f"{b[2]}"))
             self.view.tableWidget_2.setItem(7,contadorColumna, QTableWidgetItem(f"{b[3]}"))
             contadorColumna+=1
+        self.view.tableWidget_2.item(1, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget_2.item(2, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget_2.item(3, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget_2.item(5, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget_2.item(6, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
+        self.view.tableWidget_2.item(7, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
+
         if(listaAciertosXClasesPonderadoTabla[0][4]!=0 and listaAciertosXClasesPonderadoTabla[0][4]!=0):
             self.view.tableWidget_2.setItem(8,0, QTableWidgetItem("Clase 2"))
             self.view.tableWidget_2.setItem(9,0, QTableWidgetItem("K"))
@@ -370,11 +418,26 @@ class Interfaz_Grafica_Tabla(QWidget):
             self.view.tableWidget_2.setItem(11,0, QTableWidgetItem("Errores"))
             for a in listaKPonderadoTabla:
                 self.view.tableWidget_2.setItem(9,a, QTableWidgetItem(f"{a}"))
+                if(a>15):
+                    self.view.tableWidget_2.setItem(9,16, QTableWidgetItem(f"{a}"))
             contadorColumna=1
             for b in listaAciertosXClasesPonderadoTabla:
                 self.view.tableWidget_2.setItem(10,contadorColumna, QTableWidgetItem(f"{b[4]}"))
                 self.view.tableWidget_2.setItem(11,contadorColumna, QTableWidgetItem(f"{b[5]}"))
                 contadorColumna+=1
+            self.view.tableWidget_2.item(9, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
+            self.view.tableWidget_2.item(10, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
+            self.view.tableWidget_2.item(11, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
+        if(kOptimoGlobalPonderado!=-1):
+            self.view.tableWidget_2.item(1, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget_2.item(2, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget_2.item(3, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget_2.item(5, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget_2.item(6, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget_2.item(7, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget_2.item(9, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget_2.item(10, 16).setBackground(QColor(255,181,82))
+            self.view.tableWidget_2.item(11, 16).setBackground(QColor(255,181,82))
         
         self.view.tableWidget_2.verticalHeader().setVisible(False)
         self.view.tableWidget_2.horizontalHeader().setVisible(False)
