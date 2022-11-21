@@ -80,10 +80,10 @@ class Interfaz_k(QWidget):
             resolucion=ctypes.windll.user32
             resolucion_ancho=resolucion.GetSystemMetrics(0)
             resolucion_alto=resolucion.GetSystemMetrics(1)
-            left=(resolucion_ancho/2)-(1400/2)
-            top=(resolucion_alto/2)-(570/2)
-            widget.setFixedWidth(1400)
-            widget.setFixedHeight(570)
+            left=(resolucion_ancho/2)-(1360/2)
+            top=(resolucion_alto/2)-(550/2)
+            widget.setFixedWidth(1360)
+            widget.setFixedHeight(550)
             widget.move(int(left),int(top))    
     
     #Reinicia los componentes
@@ -264,10 +264,10 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(1400/2)
-        top=(resolucion_alto/2)-(570/2)
-        widget.setFixedWidth(1400)
-        widget.setFixedHeight(570)
+        left=(resolucion_ancho/2)-(1360/2)
+        top=(resolucion_alto/2)-(550/2)
+        widget.setFixedWidth(1360)
+        widget.setFixedHeight(550)
         widget.move(int(left),int(top))
     
 #------------------------------------------------------------------------- 
@@ -462,10 +462,10 @@ class Interfaz_Grafica_Tabla(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(1400/2)
-        top=(resolucion_alto/2)-(570/2)
-        widget.setFixedWidth(1400)
-        widget.setFixedHeight(570)
+        left=(resolucion_ancho/2)-(1360/2)
+        top=(resolucion_alto/2)-(550/2)
+        widget.setFixedWidth(1360)
+        widget.setFixedHeight(550)
         widget.move(int(left),int(top))
     
 #------------------------------------------------------------------------- 
@@ -473,7 +473,7 @@ class Interfaz_Grafica_Tabla(QWidget):
 class Canvas_grafica(FigureCanvas):
     #Construtor de la clase Canvas_grafica.Creacion del grafico
     def __init__(self):
-        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(4, 4), 
+        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(3.8, 3.8), 
             sharey=True, facecolor='white')
         super().__init__(self.fig)
 
