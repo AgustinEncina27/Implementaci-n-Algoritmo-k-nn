@@ -325,6 +325,8 @@ class Interfaz_Grafica_Tabla(QWidget):
             self.view.tableWidget.setItem(6,contadorColumna, QTableWidgetItem(f"{b[2]}"))
             self.view.tableWidget.setItem(7,contadorColumna, QTableWidgetItem(f"{b[3]}"))
             contadorColumna+=1
+        self.view.tableWidget.setItem(0,kOptimoRango, QTableWidgetItem("K Optimo"))
+        self.view.tableWidget.item(0, kOptimoRango).setBackground(QColor(108,187,60))
         self.view.tableWidget.item(1, kOptimoRango).setBackground(QColor(108,187,60))
         self.view.tableWidget.item(2, kOptimoRango).setBackground(QColor(108,187,60))
         self.view.tableWidget.item(3, kOptimoRango).setBackground(QColor(108,187,60))
@@ -351,6 +353,8 @@ class Interfaz_Grafica_Tabla(QWidget):
             self.view.tableWidget.item(10, kOptimoRango).setBackground(QColor(108,187,60))
             self.view.tableWidget.item(11, kOptimoRango).setBackground(QColor(108,187,60))
         if(kOptimoGlobal!=-1):
+            self.view.tableWidget.setItem(0,16, QTableWidgetItem("K Optimo Global"))
+            self.view.tableWidget.item(0, 16).setBackground(QColor(255,181,82))
             self.view.tableWidget.item(1, 16).setBackground(QColor(255,181,82))
             self.view.tableWidget.item(2, 16).setBackground(QColor(255,181,82))
             self.view.tableWidget.item(3, 16).setBackground(QColor(255,181,82))
@@ -408,6 +412,8 @@ class Interfaz_Grafica_Tabla(QWidget):
             self.view.tableWidget_2.setItem(6,contadorColumna, QTableWidgetItem(f"{b[2]}"))
             self.view.tableWidget_2.setItem(7,contadorColumna, QTableWidgetItem(f"{b[3]}"))
             contadorColumna+=1
+        self.view.tableWidget_2.setItem(0,kOptimoPonderadoRango, QTableWidgetItem("K Optimo"))
+        self.view.tableWidget_2.item(0, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
         self.view.tableWidget_2.item(1, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
         self.view.tableWidget_2.item(2, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
         self.view.tableWidget_2.item(3, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
@@ -434,6 +440,8 @@ class Interfaz_Grafica_Tabla(QWidget):
             self.view.tableWidget_2.item(10, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
             self.view.tableWidget_2.item(11, kOptimoPonderadoRango).setBackground(QColor(108,187,60))
         if(kOptimoGlobalPonderado!=-1):
+            self.view.tableWidget_2.setItem(0,16, QTableWidgetItem("K Optimo Global"))
+            self.view.tableWidget_2.item(0, 16).setBackground(QColor(255,181,82))
             self.view.tableWidget_2.item(1, 16).setBackground(QColor(255,181,82))
             self.view.tableWidget_2.item(2, 16).setBackground(QColor(255,181,82))
             self.view.tableWidget_2.item(3, 16).setBackground(QColor(255,181,82))
