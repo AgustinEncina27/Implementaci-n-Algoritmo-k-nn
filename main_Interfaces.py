@@ -80,10 +80,10 @@ class Interfaz_k(QWidget):
             resolucion=ctypes.windll.user32
             resolucion_ancho=resolucion.GetSystemMetrics(0)
             resolucion_alto=resolucion.GetSystemMetrics(1)
-            left=(resolucion_ancho/2)-(1500/2)
-            top=(resolucion_alto/2)-(620/2)
-            widget.setFixedWidth(1500)
-            widget.setFixedHeight(620)
+            left=(resolucion_ancho/2)-(1400/2)
+            top=(resolucion_alto/2)-(570/2)
+            widget.setFixedWidth(1400)
+            widget.setFixedHeight(570)
             widget.move(int(left),int(top))    
     
     #Reinicia los componentes
@@ -233,7 +233,7 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         a=str(listaDeKs[indice])
         b=str(listaDeKs[indiceEnRango])
         _translate = QtCore.QCoreApplication.translate
-        self.view.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo sin ponderación="+a+"<br>K optimo entre 1-15="+b+"</span></p></body></html>"))
+        self.view.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600;\">K óptimo sin ponderación="+a+"<br>K optimo entre 1-15="+b+"</span></p></body></html>"))
 
         self.grafica1=Canvas_grafica_Barras(listaAciertos, listaDeKs, colores)
         listaAciertosPonderado, listaDeKsPonderado, coloresPonderado= control.mostrarGraficoBarrasPonderado()
@@ -248,7 +248,7 @@ class Interfaz_Grafica_K_Optimo(QWidget):
                 indiceEnRango=listaAciertosPonderado.index(mayorEnRango)
         a=str(listaDeKsPonderado[indice])
         b=str(listaDeKsPonderado[indiceEnRango])
-        self.view.label_2.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:22pt; font-weight:600;\">K óptimo con ponderación="+a+"<br>K optimo entre 1-15="+b+"</span></p></body></html>"))
+        self.view.label_2.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600;\">K óptimo con ponderación="+a+"<br>K optimo entre 1-15="+b+"</span></p></body></html>"))
         self.grafica2=Canvas_grafica_Barras(listaAciertosPonderado, listaDeKsPonderado, coloresPonderado)
         self.navigrafica1=NavigationToolBar(self.grafica1,self)
         self.navigrafica2=NavigationToolBar(self.grafica2,self)
@@ -264,10 +264,10 @@ class Interfaz_Grafica_K_Optimo(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(1500/2)
-        top=(resolucion_alto/2)-(620/2)
-        widget.setFixedWidth(1500)
-        widget.setFixedHeight(620)
+        left=(resolucion_ancho/2)-(1400/2)
+        top=(resolucion_alto/2)-(570/2)
+        widget.setFixedWidth(1400)
+        widget.setFixedHeight(570)
         widget.move(int(left),int(top))
     
 #------------------------------------------------------------------------- 
@@ -462,10 +462,10 @@ class Interfaz_Grafica_Tabla(QWidget):
         resolucion=ctypes.windll.user32
         resolucion_ancho=resolucion.GetSystemMetrics(0)
         resolucion_alto=resolucion.GetSystemMetrics(1)
-        left=(resolucion_ancho/2)-(1500/2)
-        top=(resolucion_alto/2)-(620/2)
-        widget.setFixedWidth(1500)
-        widget.setFixedHeight(620)
+        left=(resolucion_ancho/2)-(1400/2)
+        top=(resolucion_alto/2)-(570/2)
+        widget.setFixedWidth(1400)
+        widget.setFixedHeight(570)
         widget.move(int(left),int(top))
     
 #------------------------------------------------------------------------- 
@@ -473,7 +473,7 @@ class Interfaz_Grafica_Tabla(QWidget):
 class Canvas_grafica(FigureCanvas):
     #Construtor de la clase Canvas_grafica.Creacion del grafico
     def __init__(self):
-        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(4.5, 4.5), 
+        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(4, 4), 
             sharey=True, facecolor='white')
         super().__init__(self.fig)
 
